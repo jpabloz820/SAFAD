@@ -1,0 +1,121 @@
+#Auxi1
+{
+    width: 300px;
+    height: 485px;
+    background-color: white;
+    position: absolute;
+    left: 0px;
+}
+#Auxi2
+{
+    width: 250px;
+    height: 130px;
+}
+#Auxi3
+{
+    width: 250px;
+    height: 10px;
+}
+#Auxi4
+{
+    width: 250px;
+    height: 30px;
+}
+#Auxi5
+{
+    margin-top: -10px;
+    color: cornflowerblue;
+}
+#Auxi6
+{
+    padding-top: 20px;
+    padding-left: 300px;
+}
+#Auxi7
+{
+    position: absolute;
+    left: 350px;
+    background-color: rgba(35, 65, 120, 0.84);
+    border-radius: 15px;
+    color: white;
+}
+#Auxi8
+{
+    color: white;
+}
+#Auxi9
+{
+    background-color:  rgba(255, 255, 255, 0.5);
+    width: 950px;
+    margin-top: 50px;
+    position: absolute;
+    left: 320px;
+}
+#Auxi10
+{
+    background-color:  rgba(255, 255, 255, 0.5);
+    width: 950px;
+    position: absolute;
+    left: 320px;
+}
+#Auxi11
+{
+    width: 100px;
+    position: absolute;
+    left: 100px;
+    top: 5px;
+}
+#Auxi12
+{
+    width: 100px;
+    position: absolute;
+    left: 80px;
+}
+#Auxi13
+{
+    background-color: rgb(249, 252, 115);
+    position: absolute;
+    left: 420px;
+    width: 800px;
+    height: 350px;
+    border-radius: 20px;
+}
+#Auxi14
+{
+    position: absolute;
+    top: 30px;
+    left: 500px;
+}
+h3
+{
+    margin: 20px;
+}
+#Auxi15
+{
+    padding-top: 30px;
+    padding-left: 80px;
+}
+#Auxi16
+{
+    background-color:  rgba(255, 255, 255, 0.5);
+    width: 950px;
+    margin-top: 10px;
+    position: absolute;
+    left: 320px;
+}
+#Auxi17
+{
+    position: absolute;
+    left: 480px;
+    background-color: rgba(35, 65, 120, 0.84);
+    border-radius: 15px;
+    color: white;
+}
+#Auxi18
+{
+    position: absolute;
+    left: 980px;
+    background-color: rgba(35, 65, 120, 0.84);
+    border-radius: 10px;
+    color: white;
+}

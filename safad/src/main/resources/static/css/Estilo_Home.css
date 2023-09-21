@@ -1,0 +1,66 @@
+#Auxi1
+{
+    color:cornflowerblue;
+}
+
+#Auxi2
+{
+    color:white;
+    font-size:20px;
+    background-color: cornflowerblue;
+}
+
+#div_MODE
+{
+    margin-top: 130px;
+    margin-left: 90px;
+}
+#A1
+{
+    border-right: solid #6a6868 ;
+}
+
+.v-line4{
+    border-left: thick solid #000;
+    top: 10px;
+    height:30%;
+    margin-top: 140px;
+    left: 47%;
+    position: absolute;
+   }
+#divtxt3
+{
+    margin-top: -120px;
+    margin-left: 600px;
+}
+#h2txt
+{
+    font-size: x-large;
+    text-align: center;
+    font-weight: 1000;
+    color: #3d3d3dad;
+    margin-top: 80px;
+}
+#Auxi3
+{
+    background-color: rgba(35, 65, 120, 0.84);
+    color: white;
+}
+#Auxi3:hover
+{
+    background-color: rgb(24, 55, 113);
+}
+#Auxi4
+{
+    width: 450px;
+    height: auto;
+}
+#Auxi5
+{
+    background-color: rgba(35, 65, 120, 0.84);
+    color:white;
+}
+#Auxi5:hover
+{
+    background-color: rgb(24, 55, 113);
+}

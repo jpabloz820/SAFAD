@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text=${titulo}>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/Estilo_Base.css}">
+    <link rel="stylesheet" th:href="@{/css/Estilo_Directors.css}">
+</head>
+
+<body id="Aux">
+
+    <div th:replace="Trainers/Index_Trainer :: nav" class="container" id="Auxi1"></div>
+
+    <div class="row text-center" id="Auxi6">
+        <h1 th:text=${titulo}></h1>
+    </div>
+
+    <div class="contrainer" id="Auxi10">
+        <form th:action="@{/Form_Phase}" th:object="${phase}" method="post" style="border-color: black; border: 2px; border-style: solid; padding: 20px;">
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 col-form-label">Descripción</label>
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{Description}" class="form-control">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('Description')}" th:errors="*{Description}"></small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 col-form-label">Indicador de logro</label>
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{Achievement_Indicador}" class="form-control">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('Achievement_Indicador')}" th:errors="*{Achievement_Indicador}"></small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 col-form-label">Fecha de Inicio</label>
+                <div class="col-sm-6">
+                    <input type="date" th:field="*{Start_Date}" class="form-control">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('Start_Date')}" th:errors="*{Start_Date}"></small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 col-form-label">Fecha de fin</label>
+                <div class="col-sm-6">
+                    <input type="date" th:field="*{End_Date}" class="form-control">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('End_Date')}" th:errors="*{End_Date}"></small>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <input class="btn btn-xs" type="submit" value="Crear">
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <footer th:replace="Plantilla/Base :: footer"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.bundle.min.js" type=""></script>
+
+</body>
+
+</html>

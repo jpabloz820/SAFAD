@@ -1,0 +1,78 @@
+#Aux
+{
+    background-image: url("/Imagenes/Fondo.png");
+    background-size: 1330px;
+}
+#Aux1
+{
+    background-color: rgba(19, 60, 136, .5);
+    width: 1309px;
+    height: 130px;
+    position: absolute;
+    top: 485px;
+}
+#Aux2
+{
+    width: 130px;
+    height: auto;
+}
+#Aux3
+{
+    color: white;
+    position: absolute;
+    top: 5px;
+    left:140px;
+}
+#Aux4
+{
+    color: white;
+    position: absolute;
+    top:40px;
+    left:140px;
+}
+#Aux5
+{
+    color: white;
+    position: absolute;
+    top:75px ;
+    left:140px;
+}
+#Aux3:hover
+{
+    background-color: dimgrey;
+    border-radius: 20px;
+}
+#Aux4:hover
+{
+    background-color: dimgrey;
+    border-radius: 20px;
+}
+#Aux5:hover
+{
+    background-color: dimgrey;
+    border-radius: 20px;
+}
+#Aux6
+{
+    position: absolute;
+    top: 20px;
+    left:500px;
+    width: 300px;
+    height: auto;
+}
+#Aux7
+{
+    position: absolute;
+    top: 90px;
+    left:550px;
+    font-size: 20px;
+    height: auto;
+}
+#Aux8
+{
+    position: absolute;
+    top: 10px;
+    left:1120px;
+    width: 180px;
+    height: auto;
+}
