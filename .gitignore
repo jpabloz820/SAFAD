@@ -1,0 +1,10 @@
+# Ignorar carpetas generadas por el IDE
+.vs/
+
+# Ignorar carpetas de compilación
+bin/
+obj/
+
+# Ignorar configuraciones locales de la aplicación
+appsettings.Development.json
+appsettings.json
