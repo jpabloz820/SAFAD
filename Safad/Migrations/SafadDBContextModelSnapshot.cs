@@ -24,10 +24,7 @@ namespace Safad.Migrations
             modelBuilder.Entity("Safad.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
 
                     b.Property<string>("RoleName")
                         .IsRequired()
@@ -42,15 +39,15 @@ namespace Safad.Migrations
             modelBuilder.Entity("Safad.Models.User", b =>
                 {
                     b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("Registration")
+                        .HasColumnType("bit");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -67,6 +64,41 @@ namespace Safad.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("Safad.Models.UserCoach", b =>
+                {
+                    b.Property<int>("UserCoachId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Cellphone")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("DniCoach")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("NameCoach")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserCoachId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserCoaches", (string)null);
+                });
+
             modelBuilder.Entity("Safad.Models.User", b =>
                 {
                     b.HasOne("Safad.Models.Role", "Role")
@@ -76,6 +108,17 @@ namespace Safad.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Safad.Models.UserCoach", b =>
+                {
+                    b.HasOne("Safad.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Safad.Models.Role", b =>

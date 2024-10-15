@@ -16,6 +16,7 @@ builder.Services.AddDbContext<SafadDBContext>(Options =>
 // Add services of repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IUserCoachRepository, UserCoachRepository>();
 // Add services of cookies for authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

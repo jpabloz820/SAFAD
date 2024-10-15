@@ -6,6 +6,12 @@
     <h2 class="text-center">Validación de Usuario</h2>
     <hr />
     <form asp-action="Login" method="post">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-custom">
+                @(ViewData.ModelState[string.Empty]?.Errors.FirstOrDefault()?.ErrorMessage ?? "Ocurrió un error inesperado.")
+            </div>
+        }
         <div class="form-group">
             <input type="email" class="form-control" id="email" name="email" placeholder="Correo" required/>
         </div>
@@ -16,10 +22,4 @@
         <hr />
         <a id="aux10" asp-area="" asp-controller="" asp-action="">Olvidé mi contraseña</a>
     </form>
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="alert alert-danger">
-            @ViewData.ModelState[string.Empty].Errors.FirstOrDefault()?.ErrorMessage
-        </div>
-    }
 </div>
