@@ -37,14 +37,20 @@ namespace Safad.Controllers
                 };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
                 if(role.RoleId == 1)
                 {
                     return RedirectToAction("Index", "Athlete");
                 }
                 if (role.RoleId == 2)
                 {
-                    return RedirectToAction("Index", "Coach");
+                    if (!user.Registration)
+                    {
+                        return RedirectToAction("CreateCoach", "Coach");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Coach");
+                    }
                 }
                 if (role.RoleId == 3)
                 {
@@ -58,7 +64,6 @@ namespace Safad.Controllers
                 {
                     return RedirectToAction("Index", "Administrator");
                 }
-
                 return RedirectToAction("Index", "Home");
             }
             ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
