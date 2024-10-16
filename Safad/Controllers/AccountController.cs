@@ -45,11 +45,11 @@ namespace Safad.Controllers
                 {
                     if (!user.Registration)
                     {
-                        return RedirectToAction("CreateCoach", "Coach");
+                        return RedirectToAction("CreateUserCoach", "Coach");
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Coach");
+                        return RedirectToAction("IndexCoach", "Coach");
                     }
                 }
                 if (role.RoleId == 3)

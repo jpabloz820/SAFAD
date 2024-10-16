@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCreate.cshtml";
+}
+
+@model Safad.Models.UserCoach
+
+@{
+    ViewData["Title"] = "Crear Entrenador";
+}
+
+
+<div class="container-create">
+    <h2 class ="text-center">Crear Entrenador</h2>
+    <hr />
+    <form asp-action="CreateUserCoach" method="post">
+        <div class="form-group">
+            <label for="NameCoach">Nombre</label>
+            <input type="text" class="form-control" id="NameCoach" name="NameCoach" required />
+        </div>
+        <div class="form-group">
+            <label for="DniCoach">DNI</label>
+            <input type="text" class="form-control" id="DniCoach" name="DniCoach" required />
+        </div>
+        <div class="form-group">
+            <label for="Cellphone">Celular</label>
+            <input type="text" class="form-control" id="Cellphone" name="Cellphone" required />
+        </div>
+        <div class="form-group">
+            <label for="Address">Dirección</label>
+            <input type="text" class="form-control" id="Address" name="Address" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+</div>
+
