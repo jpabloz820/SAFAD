@@ -21,6 +21,17 @@
     left: 200px;
 }
 
+.vertical-line {
+    border: none;
+    width: 3px;
+    height: 150px;
+    background: linear-gradient(to bottom, #5966a7, #1a3c74);
+    margin: 0 20px;
+    position: absolute;
+    bottom: 280px;
+    left: 650px;
+}
+
 #aux7 {
     position: absolute;
     bottom: 380px;
@@ -37,17 +48,6 @@
     position: absolute;
     bottom: 300px;
     left: 750px;
-}
-
-.vertical-line {
-    border: none;
-    width: 3px;
-    height: 150px;
-    background: linear-gradient(to bottom, #5966a7, #1a3c74);
-    margin: 0 20px;
-    position: absolute;
-    bottom: 280px;
-    left: 650px;
 }
 
 .container-login {

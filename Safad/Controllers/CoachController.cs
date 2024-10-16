@@ -16,11 +16,12 @@ namespace Safad.Controllers
             _userRepository = userRepository;
             _userCoachRepository = userCoachRepository;
         }
-        public IActionResult CreateCoach()
+        public IActionResult CreateUserCoach()
         {
             return View();
         }
 
+        [HttpPost]
         public async Task<IActionResult> CreateUserCoach(UserCoach model)
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -44,10 +45,10 @@ namespace Safad.Controllers
             var user = await _userRepository.GetById(userId);
             user.Registration = true;
             await _userRepository.Update(user);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexCoach");
         }
 
-        public IActionResult Index()
+        public IActionResult IndexCoach()
         {
             return View();
         }
