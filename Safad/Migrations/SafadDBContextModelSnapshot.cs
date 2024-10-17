@@ -134,7 +134,6 @@ namespace Safad.Migrations
                     b.ToTable("UserCoaches", (string)null);
                 });
 
-
             modelBuilder.Entity("Safad.Models.User_Athlete", b =>
                 {
                     b.Property<int>("UserAthleteId")
@@ -179,6 +178,7 @@ namespace Safad.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserAthletes", (string)null);
+                });
 
             modelBuilder.Entity("Safad.Models.Profesional", b =>
                 {
@@ -189,7 +189,6 @@ namespace Safad.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-
                 });
 
             modelBuilder.Entity("Safad.Models.User", b =>
