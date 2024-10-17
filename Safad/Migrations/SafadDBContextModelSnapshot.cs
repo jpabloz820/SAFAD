@@ -21,6 +21,41 @@ namespace Safad.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Safad.Models.Profesional", b =>
+                {
+                    b.Property<int>("ProfesionalId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Cellphone")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("DniProfesional")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("NameProfesional")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProfesionalId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Profesional", (string)null);
+                });
+
             modelBuilder.Entity("Safad.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
@@ -97,6 +132,17 @@ namespace Safad.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserCoaches", (string)null);
+                });
+
+            modelBuilder.Entity("Safad.Models.Profesional", b =>
+                {
+                    b.HasOne("Safad.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Safad.Models.User", b =>

@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCreate.cshtml";
+}
+
+@model Safad.Models.Profesional
+
+@{
+    ViewData["Title"] = "Crear Profesional";
+}
+
+
+<div class="container-create">
+    <h2 class="text-center">Crear Profesional</h2>
+    <hr />
+    <form asp-action="CreateUserProfesional" method="post">
+        <div class="form-group">
+            <label for="NameProfesional">Nombre</label>
+            <input type="text" class="form-control" id="NameProfesional" name="NameProfesional" required />
+        </div>
+        <div class="form-group">
+            <label for="DniProfesional">DNI</label>
+            <input type="text" class="form-control" id="DniProfesional" name="DniProfesional" required />
+        </div>
+        <div class="form-group">
+            <label for="Cellphone">Celular</label>
+            <input type="text" class="form-control" id="Cellphone" name="Cellphone" required />
+        </div>
+        <div class="form-group">
+            <label for="Address">Dirección</label>
+            <input type="text" class="form-control" id="Address" name="Address" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+</div>
+
+
