@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCreate.cshtml";
+}
+
+@model Safad.Models.UserCoach
+
+@{
+    ViewData["Title"] = "Crear Atleta";
+}
+
+<div class="container-create">
+    <h2 class="text-center">Crear Atleta</h2>
+    <hr />
+
+    <!-- Contenedor con scroll -->
+    <div style="max-height: 400px; overflow-y: auto;">
+        <form asp-action="CreateUserAthlete" method="post">
+            <div class="form-group">
+                <label for="NameAthlete">Nombre</label>
+                <input type="text" class="form-control" id="NameAthlete" name="NameAthlete" required />
+            </div>
+            <div class="form-group">
+                <label for="DniAthlete">DNI</label>
+                <input type="text" class="form-control" id="DniAthlete" name="DniAthlete" required />
+            </div>
+            <div class="form-group">
+                <label for="Cellphone">Celular</label>
+                <input type="text" class="form-control" id="Cellphone" name="Cellphone" required />
+            </div>
+            <div class="form-group">
+                <label for="Address">Dirección</label>
+                <input type="text" class="form-control" id="Address" name="Address" required />
+            </div>
+            <div class="form-group">
+                <label for="Weight">Peso</label>
+                <input type="text" class="form-control" id="Weight" name="Weight" required />
+            </div>
+            <div class="form-group">
+                <label for="Height">Altura</label>
+                <input type="text" class="form-control" id="Height" name="Height" required />
+            </div>
+            <div class="form-group">
+                <label for="Position">Posición</label>
+                <input type="text" class="form-control" id="Position" name="Position" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Crear</button>
+        </form>
+    </div>
+    <!-- Fin del contenedor con scroll -->
+</div>

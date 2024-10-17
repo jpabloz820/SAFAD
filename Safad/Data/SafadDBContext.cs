@@ -13,6 +13,7 @@ namespace Safad.Data
         public DbSet<User> Users { get; set; } // prop
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserCoach> UserCoaches { get; set; }
+        public DbSet<User_Athlete> UserAthletes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // override OnMod
         {
@@ -47,10 +48,27 @@ namespace Safad.Data
                     .HasForeignKey(uc => uc.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+            modelBuilder.Entity<User_Athlete>(tb =>
+            {
+                tb.HasKey(col => col.UserAthleteId);
+                tb.Property(col => col.UserAthleteId).IsRequired().ValueGeneratedNever();
+                tb.Property(col => col.NameAthlete).IsRequired().HasMaxLength(100);
+                tb.Property(col => col.DniAthlete).IsRequired().HasMaxLength(20);
+                tb.Property(col => col.Cellphone).HasMaxLength(15);
+                tb.Property(col => col.Address).HasMaxLength(150);
+                tb.Property(col => col.Weight).IsRequired();
+                tb.Property(col => col.Height).IsRequired();
+                tb.Property(col => col.Position).HasMaxLength(150);
+                tb.HasOne(uc => uc.User)
+                    .WithMany()
+                    .HasForeignKey(uc => uc.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Role>().ToTable("Roles");
             modelBuilder.Entity<UserCoach>().ToTable("UserCoaches");
+            modelBuilder.Entity<User_Athlete>().ToTable("UserAthletes");
         }
     }
 }

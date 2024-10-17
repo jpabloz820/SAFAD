@@ -39,7 +39,15 @@ namespace Safad.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                 if(role.RoleId == 1)
                 {
-                    return RedirectToAction("Index", "Athlete");
+                    if (!user.Registration)
+                    {
+                        return RedirectToAction("CreateUserAthlete", "Athlete");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Athlete");
+                    }
+                    
                 }
                 if (role.RoleId == 2)
                 {

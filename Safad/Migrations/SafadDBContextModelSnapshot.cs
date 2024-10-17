@@ -99,6 +99,52 @@ namespace Safad.Migrations
                     b.ToTable("UserCoaches", (string)null);
                 });
 
+            modelBuilder.Entity("Safad.Models.User_Athlete", b =>
+                {
+                    b.Property<int>("UserAthleteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Cellphone")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("DniAthlete")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<float>("Height")
+                        .HasColumnType("real");
+
+                    b.Property<string>("NameAthlete")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Weight")
+                        .HasColumnType("real");
+
+                    b.HasKey("UserAthleteId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserAthletes", (string)null);
+                });
+
             modelBuilder.Entity("Safad.Models.User", b =>
                 {
                     b.HasOne("Safad.Models.Role", "Role")
@@ -111,6 +157,17 @@ namespace Safad.Migrations
                 });
 
             modelBuilder.Entity("Safad.Models.UserCoach", b =>
+                {
+                    b.HasOne("Safad.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Safad.Models.User_Athlete", b =>
                 {
                     b.HasOne("Safad.Models.User", "User")
                         .WithMany()
