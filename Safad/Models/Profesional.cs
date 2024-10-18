@@ -8,6 +8,6 @@
         public string Cellphone { get; set; }
         public string Address { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }

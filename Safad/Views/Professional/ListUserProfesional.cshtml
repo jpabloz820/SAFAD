@@ -17,7 +17,7 @@
                         <span>@Model.NameProfesional</span>
                     </div>
                     <div>
-                        <label>Email: </label>
+                        <label>DNI: </label>
                         <span>@Model.DniProfesional</span>
                     </div>
                     <div>
@@ -30,6 +30,19 @@
                     </div>
                     <!-- Agrega más campos si es necesario -->
                 </div>
+                <div class="card-footer text-center">
+                    <!-- Botón de Actualizar -->
+                    <a asp-controller="Professional" asp-action="EditUserProfesional" asp-route-id="@Model.ProfesionalId" class="btn btn-primary">
+                        Actualizar
+                    </a>
+                    <!-- Botón de Eliminar -->
+                    <form asp-controller="Professional" asp-action="Delete" asp-route-id="@Model.ProfesionalId" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este profesional?');">
+                            Eliminar
+                        </button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

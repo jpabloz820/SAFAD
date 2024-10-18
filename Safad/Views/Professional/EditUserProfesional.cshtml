@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutProfesional.cshtml";
+}
+
+@model Profesional
+
+@{
+    ViewData["Title"] = "Editar Profesional";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Editar Profesional</h2>
+            <form asp-action="EditUserProfesional" method="post" class="mt-4">
+                <input type="hidden" asp-for="@Model.ProfesionalId" /> <!-- Campo oculto para el ID -->
+
+                <div class="form-group">
+                    <label asp-for="@Model.NameProfesional" class="control-label"></label>
+                    <input asp-for="@Model.NameProfesional" class="form-control" />
+                    <span asp-validation-for="@Model.NameProfesional" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.DniProfesional" class="control-label"></label>
+                    <input asp-for="@Model.DniProfesional" class="form-control" />
+                    <span asp-validation-for="@Model.DniProfesional" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Cellphone" class="control-label"></label>
+                    <input asp-for="@Model.Cellphone" class="form-control" />
+                    <span asp-validation-for="@Model.Cellphone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Address" class="control-label"></label>
+                    <input asp-for="@Model.Address" class="form-control" />
+                    <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-group text-center">
+                    <input type="submit" value="Actualizar" class="btn btn-primary" />
+                    <a asp-action="ListUserProfesional" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
