@@ -24,10 +24,58 @@ namespace Safad.Controllers
             return View();
         }
 
-        public IActionResult EditUserProfesional()
+        // Método para mostrar el formulario de edición
+        public async Task<IActionResult> EditUserProfesional(int id)
         {
-            return View();
+            var profesional = await _profesionalRepository.GetById(id);
+            if (profesional == null)
+            {
+                return NotFound();
+            }
+            profesional.User = await _userRepository.GetById(profesional.UserId);
+            return View(profesional); // Devuelve la vista con el modelo
         }
+
+        // Método para manejar la edición del profesional
+        [HttpPost]
+        [ValidateAntiForgeryToken] // Para proteger contra ataques CSRF
+        public async Task<IActionResult> EditUserProfesional(int ProfesionalId, Profesional model)
+        {
+            System.Diagnostics.Debug.WriteLine("Llegó al método EditUserProfesional con ID: " + ProfesionalId);
+           
+
+            if (ProfesionalId != model.ProfesionalId)
+            {
+                return BadRequest(); // Si el ID no coincide
+            }
+
+            // Asignar el UserId (si estás utilizando el UserId y no el objeto User completo)
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim != null)
+            {
+                model.UserId = int.Parse(userIdClaim.Value); // Asigna el UserId
+                model.User = await _userRepository.GetById(model.UserId); // Carga el usuario
+            }
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error: {error.ErrorMessage}");
+                }
+            }
+
+
+            if (ModelState.IsValid) // Verifica si el modelo es válido
+            {
+                System.Diagnostics.Debug.WriteLine("El modelo es valido");
+                await _profesionalRepository.Update(model); // Actualiza el profesional
+                return RedirectToAction("ListUserProfesional"); // Redirige a la lista de profesionales o a otra acción
+            }
+
+            return View(model); // Si hay errores, vuelve a mostrar el formulario
+        }
+
 
         public IActionResult DeleteUserProfesional() { 
             return View();
