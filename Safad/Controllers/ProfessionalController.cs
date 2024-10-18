@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Safad.Interfaces;
 using Safad.Models;
 using System.Security.Claims;
@@ -22,6 +23,34 @@ namespace Safad.Controllers
         {
             return View();
         }
+
+        public IActionResult EditUserProfesional()
+        {
+            return View();
+        }
+
+        public IActionResult DeleteUserProfesional() { 
+            return View();
+        }
+
+        public async Task<IActionResult> ListUserProfesional()
+        {
+            // Obtén el ID del usuario autenticado
+            int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            // Obtén el profesional de manera asincrónica usando await
+            var profesional = await _profesionalRepository.GetById(userId);
+
+            // Si no se encuentra el profesional
+            if (profesional == null)
+            {
+                return NotFound();
+            }
+
+            // Retorna la vista con el modelo correcto
+            return View(profesional);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateUserProfesional(Profesional model)
