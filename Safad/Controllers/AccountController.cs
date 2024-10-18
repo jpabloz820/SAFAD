@@ -64,11 +64,11 @@ namespace Safad.Controllers
                 {
                     if (!user.Registration)
                     {
-                        return RedirectToAction("CreateUserProfesional", "Profesional");
+                        return RedirectToAction("CreateUserProfesional", "Professional");
                     }
                     else
                     {
-                        return RedirectToAction("IndexProfesional", "Profesional");
+                        return RedirectToAction("IndexProfesional", "Professional");
                     }
                 }
                 if (role.RoleId == 4)
