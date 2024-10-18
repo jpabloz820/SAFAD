@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutProfesional.cshtml";
+}
+
+@model Profesional // Tu modelo que contiene los datos del profesional
+
+<div class="container">
+    <h2 class="text-center">Mis Datos</h2> <!-- Centra el encabezado -->
+    <div class="row justify-content-center">
+        <!-- Centra la fila -->
+        <div class="col-md-6">
+            <!-- Ajusta el tamaño de la columna -->
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <label>Nombre Completo: </label>
+                        <span>@Model.NameProfesional</span>
+                    </div>
+                    <div>
+                        <label>Email: </label>
+                        <span>@Model.DniProfesional</span>
+                    </div>
+                    <div>
+                        <label>Teléfono: </label>
+                        <span>@Model.Cellphone</span>
+                    </div>
+                    <div>
+                        <label>Dirección: </label>
+                        <span>@Model.Address</span>
+                    </div>
+                    <!-- Agrega más campos si es necesario -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
