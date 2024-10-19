@@ -77,22 +77,50 @@ namespace Safad.Controllers
         }
 
 
-        public IActionResult DeleteUserProfesional() { 
-            return View();
+        public async Task<IActionResult> DeleteUserProfesional(int id)
+        {
+            var profesional = await _profesionalRepository.GetById(id);
+            if (profesional == null)
+            {
+                return NotFound(); // Si el profesional no existe, devuelve un error 404
+            }
+
+            return View(profesional); // Devuelve la vista de confirmación con el profesional a eliminar
+        }
+
+        [HttpPost, ActionName("DeleteUserProfesional")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var profesional = await _profesionalRepository.GetById(id);
+            if (profesional == null)
+            {
+                return NotFound(); // Si no se encuentra el profesional
+            }
+
+            // Realiza la eliminación del profesional
+            await _profesionalRepository.Delete(profesional);
+
+            return RedirectToAction("ListUserProfesional"); // Redirige a la lista de profesionales
         }
 
         public async Task<IActionResult> ListUserProfesional()
         {
+
             // Obtén el ID del usuario autenticado
             int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            // Obtén el profesional de manera asincrónica usando await
-            var profesional = await _profesionalRepository.GetById(userId);
+            // Busca el profesional por el UserId si corresponde
+            var profesional = await _profesionalRepository.GetById(userId + 1);
+            System.Diagnostics.Debug.WriteLine("Llegó al método ListProfesional con ID: " + userId);
 
-            // Si no se encuentra el profesional
+
+
+            // Si no se encuentra el profesional, redirige al formulario de creación
             if (profesional == null)
             {
-                return NotFound();
+                // Opción 1: Redirigir al formulario para crear un nuevo profesional
+                return RedirectToAction("CreateUserProfesional");
             }
 
             // Retorna la vista con el modelo correcto

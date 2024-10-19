@@ -36,7 +36,7 @@
                         Actualizar
                     </a>
                     <!-- Botón de Eliminar -->
-                    <form asp-controller="Professional" asp-action="Delete" asp-route-id="@Model.ProfesionalId" method="post" style="display:inline;">
+                    <form asp-controller="Professional" asp-action="DeleteUserProfesional" asp-route-id="@Model.ProfesionalId" method="post" style="display:inline;">
                         <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este profesional?');">
                             Eliminar
                         </button>
