@@ -8,6 +8,7 @@
         public string Cellphone { get; set; }
         public string Address { get; set; }
         public float Weight { get; set; }
+        public string? PhotoPath { get; set; }
         public float Height { get; set; }
         public string Position { get; set; }
         public int UserId { get; set; }
