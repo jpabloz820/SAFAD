@@ -18,6 +18,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserCoachRepository, UserCoachRepository>();
 
+
 builder.Services.AddScoped<IUserAthleteRepository, UserAthleteRepository>();
 
 builder.Services.AddScoped<IProfesionalRepository, RepositoryProfesional>();

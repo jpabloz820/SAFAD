@@ -9,12 +9,19 @@ namespace Safad.Controllers
     public class AccountController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUserCoachRepository _userCoachRepository;
+        private readonly IUserAthleteRepository _userAthleteRepository;
         private readonly IRoleRepository _roleRepository;
+
         public AccountController(IUserRepository userRepository,
-            IRoleRepository roleRepository)
+            IRoleRepository roleRepository,
+            IUserCoachRepository userCoachRepository,
+            IUserAthleteRepository userAthleteRepository)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
+            _userCoachRepository = userCoachRepository;
+            _userAthleteRepository = userAthleteRepository;
         }
 
         public IActionResult Login()
@@ -26,14 +33,37 @@ namespace Safad.Controllers
         public async Task<IActionResult> Login(string email, string password)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);
+            string displayname = "Usuario";
+            string profilePicture = "/img/default-profile.png";
+            switch(user.RoleId)
+            {
+                case 1:
+                    var userAthlete = await _userAthleteRepository.GetByUserId(user.UserId);
+                    if (userAthlete != null)
+                    {
+                        displayname = userAthlete.NameAthlete;
+                        profilePicture = userAthlete.PhotoPath;
+                    }
+                    break;
+                case 2:
+                    var userCoach = await _userCoachRepository.GetByUserId(user.UserId);
+                    if (userCoach != null)
+                    {
+                        displayname = userCoach.NameCoach;
+                        profilePicture = userCoach.PhotoPath;
+                    }
+                    break;
+            }
             if (user != null && user.Password == password)
             {
                 var role = await _roleRepository.GetById(user.RoleId);
                 var claims = new List<Claim> 
                 {
-                    new Claim(ClaimTypes.Name, user.UserEmail),
+                    new Claim(ClaimTypes.Email, user.UserEmail),
                     new Claim(ClaimTypes.Role, role.RoleName),
-                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                    new Claim(ClaimTypes.Name, displayname),
+                    new Claim("ProfilePicture",profilePicture)
                 };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
