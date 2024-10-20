@@ -77,7 +77,15 @@ namespace Safad.Controllers
                 }
                 if (role.RoleId == 5)
                 {
-                    return RedirectToAction("Index", "Administrator");
+                    if (!user.Registration)
+                    {
+                        return RedirectToAction("CreateUserAdministrative", "Administrator");
+                    }
+                    else
+                    {
+                        return RedirectToAction("IndexAdministrative", "Administrator");
+                    }
+                    
                 }
                 return RedirectToAction("Index", "Home");
             }
