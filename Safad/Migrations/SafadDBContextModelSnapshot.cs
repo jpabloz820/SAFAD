@@ -99,6 +99,41 @@ namespace Safad.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("Safad.Models.UserAdministrative", b =>
+                {
+                    b.Property<int>("UserAdministrativeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Cellphone")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("DniAdministrative")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("NameAdministrative")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserAdministrativeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserAdministrative", (string)null);
+                });
+
             modelBuilder.Entity("Safad.Models.UserCoach", b =>
                 {
                     b.Property<int>("UserCoachId")
@@ -200,6 +235,17 @@ namespace Safad.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Safad.Models.UserAdministrative", b =>
+                {
+                    b.HasOne("Safad.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Safad.Models.UserCoach", b =>
