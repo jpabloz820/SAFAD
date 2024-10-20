@@ -21,6 +21,7 @@ builder.Services.AddScoped<IUserCoachRepository, UserCoachRepository>();
 builder.Services.AddScoped<IUserAthleteRepository, UserAthleteRepository>();
 
 builder.Services.AddScoped<IProfesionalRepository, RepositoryProfesional>();
+builder.Services.AddScoped<IUserAdministrativeRepositor, UserAdministrativeRepository>();
 
 // Add services of cookies for authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
