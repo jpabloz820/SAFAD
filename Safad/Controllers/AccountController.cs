@@ -35,19 +35,12 @@ namespace Safad.Controllers
             var user = await _userRepository.GetUserByEmailAsync(email);
             string displayname = "Usuario";
             string profilePicture = "/img/default-profile.png";
-            switch(user.RoleId)
+
+            switch (user.RoleId)
             {
                 case 1:
                     break;
-                case 2:
-                    var userCoach = await _userCoachRepository.GetByUserId(user.UserId);
-                    if (userCoach != null)
-                    {
-                        displayname = userCoach.NameCoach;
-                        profilePicture = userCoach.PhotoPath;
-                    }
-                    break;
-            }
+            }   
             if (user != null && user.Password == password)
             {
                 var role = await _roleRepository.GetById(user.RoleId);
@@ -57,7 +50,7 @@ namespace Safad.Controllers
                     new Claim(ClaimTypes.Role, role.RoleName),
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim(ClaimTypes.Name, displayname),
-                    new Claim("ProfilePicture",profilePicture)
+                    new Claim("ProfilePicture",profilePicture)                   
                 };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));

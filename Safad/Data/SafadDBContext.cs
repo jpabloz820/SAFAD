@@ -64,6 +64,7 @@ namespace Safad.Data
                 tb.Property(col => col.Weight).IsRequired();
                 tb.Property(col => col.Height).IsRequired();
                 tb.Property(col => col.Position).HasMaxLength(150);
+                tb.Property(col => col.PhotoPath).IsRequired().HasMaxLength(255);
                 tb.HasOne(uc => uc.User)
                     .WithMany()
                     .HasForeignKey(uc => uc.UserId)
