@@ -1,0 +1,36 @@
+@{
+    Layout = "~/Views/Shared/_LayoutCreate.cshtml";
+}
+
+@model Safad.Models.UserAdministrative
+
+@{
+    ViewData["Title"] = "Crear Administrative";
+}
+
+
+<div class="container-create">
+    <h2 class="text-center">Crear Profesional</h2>
+    <hr />
+    <form asp-action="CreateUserAdministrative" method="post">
+        <div class="form-group">
+            <label for="NameAdministrative">Nombre</label>
+            <input type="text" class="form-control" id="NameAdministrative" name="NameAdministrative" required />
+        </div>
+        <div class="form-group">
+            <label for="DniAdministrative">DNI</label>
+            <input type="text" class="form-control" id="DniAdministrative" name="DniAdministrative" required />
+        </div>
+        <div class="form-group">
+            <label for="Cellphone">Celular</label>
+            <input type="text" class="form-control" id="Cellphone" name="Cellphone" required />
+        </div>
+        <div class="form-group">
+            <label for="Address">Dirección</label>
+            <input type="text" class="form-control" id="Address" name="Address" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+</div>
+
+
