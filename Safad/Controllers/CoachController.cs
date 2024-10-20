@@ -22,12 +22,27 @@ namespace Safad.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUserCoach(UserCoach model)
+        public async Task<IActionResult> CreateUserCoach(UserCoach model, IFormFile photo)
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null)
             {
                 return RedirectToAction("AccessDenied", "Account");
+            }
+            string photoPath = null;
+            if (photo != null && photo.Length > 0)
+            {
+                var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+                var filePath = Path.Combine(directory, photo.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await photo.CopyToAsync(stream);
+                }
+                photoPath = $"/img/{photo.FileName}";
             }
             int userId = int.Parse(userIdClaim.Value);
             var lastUserCoach = await _userCoachRepository.GetSequence(new UserCoach());
@@ -39,7 +54,8 @@ namespace Safad.Controllers
                 DniCoach = model.DniCoach,
                 Cellphone = model.Cellphone,
                 Address = model.Address,
-                UserId = userId
+                UserId = userId,
+                PhotoPath = photoPath
             };
             await _userCoachRepository.Add(newUserCoach);
             var user = await _userRepository.GetById(userId);

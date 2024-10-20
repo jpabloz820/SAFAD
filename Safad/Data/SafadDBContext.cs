@@ -47,6 +47,7 @@ namespace Safad.Data
                 tb.Property(col => col.DniCoach).IsRequired().HasMaxLength(20);
                 tb.Property(col => col.Cellphone).HasMaxLength(15);
                 tb.Property(col => col.Address).HasMaxLength(150);
+                tb.Property(col => col.PhotoPath).IsRequired().HasMaxLength(255);
                 tb.HasOne(uc => uc.User)
                     .WithMany() 
                     .HasForeignKey(uc => uc.UserId)

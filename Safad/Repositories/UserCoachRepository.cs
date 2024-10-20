@@ -13,5 +13,15 @@ namespace Safad.Repositories
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Método genérico para obtener todos el userCoach por el userId
+        /// </summary>
+        /// <returns>Registro con la información encontrada</returns>
+        public async Task<UserCoach> GetByUserId(int userId)
+        {
+            return await _context.UserCoaches
+                .FirstOrDefaultAsync(uc => uc.UserId == userId);
+        }
     }
 }

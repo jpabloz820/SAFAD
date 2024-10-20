@@ -38,12 +38,6 @@ namespace Safad.Controllers
             switch(user.RoleId)
             {
                 case 1:
-                    var userAthlete = await _userAthleteRepository.GetByUserId(user.UserId);
-                    if (userAthlete != null)
-                    {
-                        displayname = userAthlete.NameAthlete;
-                        profilePicture = userAthlete.PhotoPath;
-                    }
                     break;
                 case 2:
                     var userCoach = await _userCoachRepository.GetByUserId(user.UserId);
