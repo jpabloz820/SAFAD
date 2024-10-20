@@ -17,6 +17,7 @@ namespace Safad.Data
         public DbSet<User_Athlete> UserAthletes { get; set; }
 
         public DbSet<Profesional> Profesional { get; set; }
+        public DbSet<UserAdministrative> UserAdministratives { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // override OnMod
@@ -82,6 +83,19 @@ namespace Safad.Data
                     .HasForeignKey(uc => uc.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+            modelBuilder.Entity<UserAdministrative>(tb =>
+            {
+                tb.HasKey(col => col.UserAdministrativeId);
+                tb.Property(col => col.UserAdministrativeId).IsRequired().ValueGeneratedNever();
+                tb.Property(col => col.NameAdministrative).IsRequired().HasMaxLength(100);
+                tb.Property(col => col.DniAdministrative).IsRequired().HasMaxLength(20);
+                tb.Property(col => col.Cellphone).HasMaxLength(15);
+                tb.Property(col => col.Address).HasMaxLength(150);
+                tb.HasOne(uc => uc.User)
+                    .WithMany() 
+                    .HasForeignKey(uc => uc.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
 
             modelBuilder.Entity<User>().ToTable("Users");
@@ -91,6 +105,7 @@ namespace Safad.Data
             modelBuilder.Entity<User_Athlete>().ToTable("UserAthletes");
 
             modelBuilder.Entity<Profesional>().ToTable("Profesional");
+            modelBuilder.Entity<UserAdministrative>().ToTable("UserAdministrative");
 
         }
     }
