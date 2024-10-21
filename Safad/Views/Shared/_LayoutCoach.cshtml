@@ -12,9 +12,14 @@
     <header>
         <div class="container-nav">
             <ul class="navbar-nav">
-                <li class="nav-aux">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
-                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-aux">
+                        <img src="@User.FindFirst("ProfilePicture")?.Value" alt="Profile Picture" class="user-profile-picture" />
+                        <br />
+                        <span>@User.Identity.Name</span>
+                    </li>
+                }
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
                 </li>
@@ -31,7 +36,9 @@
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
                 </li>
                 <li class="nav-aux1">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout">
+                        <img src="~/img/logout.png" alt="Logout" class="logout-icon">
+                    </a>
                 </li>
             </ul>
         </div>
