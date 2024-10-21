@@ -33,23 +33,23 @@ namespace Safad.Controllers
         public async Task<IActionResult> Login(string email, string password)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);
-            string displayname = "Usuario";
-            string profilePicture = "/img/default-profile.png";
 
-            switch (user.RoleId)
-            {
-                case 1:
-                    var userAthlete = await _userAthleteRepository.GetByUserId(user.UserId);
-                    if (userAthlete != null)
-                    {
-                        displayname = userAthlete.NameAthlete;
-                        profilePicture = userAthlete.PhotoPath;
-                    }
-                    break;
-            }   
             if (user != null && user.Password == password)
             {
                 var role = await _roleRepository.GetById(user.RoleId);
+                string displayname = "Usuario";
+                string profilePicture = "/img/default-profile.png";
+                switch (user.RoleId)
+                {
+                    case 1:
+                        var userAthlete = await _userAthleteRepository.GetByUserId(user.UserId);
+                        if (userAthlete != null)
+                        {
+                            displayname = userAthlete.NameAthlete;
+                            profilePicture = userAthlete.PhotoPath ?? "/img/default-profile.png";
+                        }
+                        break;
+                }
                 var claims = new List<Claim> 
                 {
                     new Claim(ClaimTypes.Email, user.UserEmail),
@@ -68,7 +68,7 @@ namespace Safad.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Athlete");
+                        return RedirectToAction("IndexAthlete", "Athlete");
                     }
                     
                 }

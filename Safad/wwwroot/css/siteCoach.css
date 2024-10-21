@@ -75,6 +75,17 @@ main, header, footer {
     z-index: 2;
 }
 
+.logout-icon {
+    width: 150px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.logout-icon:hover {
+        transform: scale(1.1);
+}
+
 footer {
     position: absolute;
     bottom: 0;

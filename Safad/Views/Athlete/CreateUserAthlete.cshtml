@@ -14,7 +14,7 @@
 
     <!-- Contenedor con scroll -->
     <div style="max-height: 400px; overflow-y: auto;">
-        <form asp-action="CreateUserAthlete" method="post">
+        <form asp-action="CreateUserAthlete" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="NameAthlete">Nombre</label>
                 <input type="text" class="form-control" id="NameAthlete" name="NameAthlete" required />
@@ -44,8 +44,8 @@
                 <input type="text" class="form-control" id="Position" name="Position" required />
             </div>
             <div class="form-group">
-                <label for="PhotoPath">Altura</label>
-                <input type="file" class="form-control" id="PhotoPath" name="PhotoPath" required />
+                <label for="Photo">Foto</label>
+                <input type="file" class="form-control" id="Photo" name="photo" required />
             </div>
             <button type="submit" class="btn btn-primary">Crear</button>
         </form>
