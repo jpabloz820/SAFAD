@@ -29,6 +29,9 @@ namespace Safad.Controllers
             {
                 return RedirectToAction("AccessDenied", "Account");
             }
+            int userId = int.Parse(userIdClaim.Value);
+            var lastUserAthlete = await _userAthleteRepository.GetSequence(new User_Athlete());
+            int newUserAthleteId = (lastUserAthlete != null) ? lastUserAthlete.UserAthleteId + 1 : 1;
             string photoPath = null;
             if (photo != null && photo.Length > 0)
             {
@@ -46,9 +49,7 @@ namespace Safad.Controllers
                 photoPath = $"/img/{photo.FileName}";
             }
 
-                int userId = int.Parse(userIdClaim.Value);
-                var lastUserAthlete = await _userAthleteRepository.GetSequence(new User_Athlete());
-                int newUserAthleteId = (lastUserAthlete != null) ? lastUserAthlete.UserAthleteId + 1 : 1;
+                
                 var newUserAthlete = new User_Athlete
                 {
                     UserAthleteId = newUserAthleteId,
@@ -66,7 +67,7 @@ namespace Safad.Controllers
                 var user = await _userRepository.GetById(userId);
                 user.Registration = true;
                 await _userRepository.Update(user);
-                return RedirectToAction("IndexAthlete");
+                return RedirectToAction("Login","Account");
             }
 
 

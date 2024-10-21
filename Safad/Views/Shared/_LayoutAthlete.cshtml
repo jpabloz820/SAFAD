@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Safad</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/siteCoach.css" asp-append-version="true" />
+    <!--link rel="stylesheet" href="~/css/Safad.styles.css" asp-append-version="true" /-->
+</head>
+<body>
+    <header>
+        <div class="container-nav">
+            <ul class="navbar-nav">
+                @if(User.Identity.IsAuthentificated)
+                {
+                    <li class="nav-aux">
+                        <img src="@User.FindFirst("ProfilePicture")?.Value" alt="Profile Picture" class="user-profile-picture"  />
+                        <br />
+                        <span>@User.Identity.Name </span>
+                                    
+                    </li>
+
+                }
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                </li>
+                <li class="nav-aux1">
+                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout">
+                        <img src="~/img/logout.jpg" alt="Logout" class="Logout-icon" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            <p id="aux1">MULTIDIMENSIONAL</p>
+            <a class="nav-link" id="aux4" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+            <a class="nav-link" id="aux5" asp-area="" asp-controller="Home" asp-action="WhoWeAre">Quiénes Somos</a>
+            <a class="nav-link" id="aux6" asp-area="" asp-controller="Home" asp-action="Contact">Contacto</a>
+            <div class="footer-images">
+                <img src="~/img/MODELO.png" id="aux2" alt="Imagen 1" class="footer-image">
+                <img src="~/img/Pie.png" id="aux3" alt="Imagen 2" class="footer-image">
+            </div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com" target="_blank">
+                    <img src="~/img/facebook-icon.png" alt="Facebook" class="social-icon">
+                </a>
+                <a href="https://www.instagram.com" target="_blank">
+                    <img src="~/img/instagram-icon.png" alt="Instagram" class="social-icon">
+                </a>
+                <a href="https://www.youtube.com" target="_blank">
+                    <img src="~/img/youtube-icon.png" alt="YouTube" class="social-icon">
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

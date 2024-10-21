@@ -17,7 +17,7 @@ namespace Safad.Repositories
         }
 
         /// <summary>
-        /// Método genérico para obtener  el user Athlete por el userId
+        /// Método genérico para obtener  el user Athlete por el userI
         /// </summary>
         /// <returns>Registro con la información encontrada</returns>
         public async Task<User_Athlete> GetByUserId(int userId)
