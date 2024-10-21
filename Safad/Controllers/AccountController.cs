@@ -32,24 +32,31 @@ namespace Safad.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string email, string password)
         {
-            var user = await _userRepository.GetUserByEmailAsync(email);
-            string displayname = "Usuario";
-            string profilePicture = "/img/default-profile.png";
-
-            switch (user.RoleId)
-            {
-                case 1:
-                    break;
-            }   
+            var user = await _userRepository.GetUserByEmailAsync(email);  
             if (user != null && user.Password == password)
             {
                 var role = await _roleRepository.GetById(user.RoleId);
+                string displayName = "Usuario";
+                string profilePicture = "/img/default-profile.png";
+                switch (user.RoleId)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        var userCoach = await _userCoachRepository.GetByUserId(user.UserId);
+                        if (userCoach != null)
+                        {
+                            displayName = userCoach.NameCoach;
+                            profilePicture = userCoach.PhotoPath ?? "/img/default-profile.png";
+                        }
+                        break;
+                }
                 var claims = new List<Claim> 
                 {
                     new Claim(ClaimTypes.Email, user.UserEmail),
                     new Claim(ClaimTypes.Role, role.RoleName),
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                    new Claim(ClaimTypes.Name, displayname),
+                    new Claim(ClaimTypes.Name, displayName),
                     new Claim("ProfilePicture",profilePicture)                   
                 };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -100,6 +107,12 @@ namespace Safad.Controllers
             }
             ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
             return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
         }
     }
 }

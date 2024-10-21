@@ -29,6 +29,9 @@ namespace Safad.Controllers
             {
                 return RedirectToAction("AccessDenied", "Account");
             }
+            int userId = int.Parse(userIdClaim.Value);
+            var lastUserCoach = await _userCoachRepository.GetSequence(new UserCoach());
+            int newUserCoachId = (lastUserCoach != null) ? lastUserCoach.UserCoachId + 1 : 1;
             string photoPath = null;
             if (photo != null && photo.Length > 0)
             {
@@ -44,9 +47,6 @@ namespace Safad.Controllers
                 }
                 photoPath = $"/img/{photo.FileName}";
             }
-            int userId = int.Parse(userIdClaim.Value);
-            var lastUserCoach = await _userCoachRepository.GetSequence(new UserCoach());
-            int newUserCoachId = (lastUserCoach != null) ? lastUserCoach.UserCoachId + 1 : 1;
             var newUserCoach = new UserCoach
             {
                 UserCoachId = newUserCoachId,
@@ -61,7 +61,7 @@ namespace Safad.Controllers
             var user = await _userRepository.GetById(userId);
             user.Registration = true;
             await _userRepository.Update(user);
-            return RedirectToAction("IndexCoach");
+            return RedirectToAction("Login", "Account"); ;
         }
 
         public IActionResult IndexCoach()
