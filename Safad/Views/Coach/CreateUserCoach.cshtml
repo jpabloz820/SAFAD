@@ -12,7 +12,7 @@
 <div class="container-create">
     <h2 class ="text-center">Crear Entrenador</h2>
     <hr />
-    <form asp-action="CreateUserCoach" method="post">
+    <form asp-action="CreateUserCoach" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="NameCoach">Nombre</label>
             <input type="text" class="form-control" id="NameCoach" name="NameCoach" required />
@@ -28,6 +28,10 @@
         <div class="form-group">
             <label for="Address">Direccion</label>
             <input type="text" class="form-control" id="Address" name="Address" required />
+        </div>
+        <div class="form-group">
+            <label for="Photo">Foto</label>
+            <input type="file" class="form-control" id="Photo" name="photo" />
         </div>
         <button type="submit" class="btn btn-primary">Crear</button>
     </form>
