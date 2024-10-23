@@ -1,15 +1,13 @@
-﻿namespace Safad.Models
+﻿namespace Safad.Dtos
 {
-    public class UserCoach
+    public class UserCoachDTO
     {
-        public int UserCoachId { get; set; }
         public string NameCoach { get; set; }
         public string DniCoach { get; set; }
         public string Cellphone { get; set; }
         public string Address { get; set; }
         public string? PhotoPath { get; set; }
-        public int UserId { get; set; }
-        public User User { get; set; }
-        public Team Team { get; set; }
+        public string UserEmail { get; set; }
+        public string Password { get; set; }
     }
 }

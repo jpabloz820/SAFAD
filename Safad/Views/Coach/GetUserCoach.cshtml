@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCoach.cshtml";
+}
+
+@model Safad.Dtos.UserCoachDTO
+
+<div class="container-getdata">
+    <h2 class="text-center">MIS DATOS</h2>
+
+    <p><strong>Nombre:</strong> @Model.NameCoach</p>
+    <p><strong>DNI:</strong> @Model.DniCoach</p>
+    <p><strong>Celular:</strong> @Model.Cellphone</p>
+    <p><strong>Dirección:</strong> @Model.Address</p>
+    <p><strong></strong> <img src="@Model.PhotoPath" alt="Foto del coach" class="user-picture" /></p>
+    <p><strong>Correo:</strong> @Model.UserEmail</p>
+    <p><strong>Contraseña:</strong> @Model.Password</p>
+    <div class="btn-container">
+        <a class="btn btn-dark" asp-area="" asp-controller="Coach" asp-action="UpdateUserCoach">Actualizar</a>
+        <a class="btn btn-dark" id="btn" asp-area="" asp-controller="Coach" asp-action="">Actualizar Contraseña</a>
+    </div>
+</div>
+

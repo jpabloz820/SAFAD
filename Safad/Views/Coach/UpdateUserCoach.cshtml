@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCoach.cshtml";
+}
+
+@model Safad.Dtos.UpdateUserCoachDTO
+
+<div class="container-getdata">
+    <h2 class="text-center">ACTUALIZAR MIS DATOS</h2>
+    <form asp-action="UpdateUserCoach" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="NameCoach">Nombre</label>
+            <input type="text" class="form-control" name="NameCoach" value="@Model.NameCoach" required />
+        </div>
+        <div class="form-group">
+            <label for="DniCoach">DNI</label>
+            <input type="text" class="form-control" name="DniCoach" value="@Model.DniCoach" required />
+        </div>
+        <div class="form-group">
+            <label for="Cellphone">Celular</label>
+            <input type="text" class="form-control" name="Cellphone" value="@Model.Cellphone" required />
+        </div>
+        <div class="form-group">
+            <label for="Address">Direccion</label>
+            <input type="text" class="form-control" name="Address" value="@Model.Address" required />
+        </div>
+        <div class="form-group">
+            <label for="Photo">Foto</label>
+            <input type="file" class="form-control" id="Photo" name="photo" />
+        </div>
+        <button type="submit" class="btn btn-dark">Actualizar</button>
+    </form>
+</div>
