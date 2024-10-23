@@ -61,7 +61,10 @@ namespace Safad.Controllers
                     Height = model.Height,
                     Position = model.Position,
                     UserId = userId,
-                    PhotoPath = photoPath
+                    PhotoPath = photoPath,
+                    Age = model.Age,
+                    TeamId = model.TeamId
+
                 };
                 await _userAthleteRepository.Add(newUserAthlete);
                 var user = await _userRepository.GetById(userId);

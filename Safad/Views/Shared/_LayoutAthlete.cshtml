@@ -5,23 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Safad</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/siteCoach.css" asp-append-version="true" />
-    <!--link rel="stylesheet" href="~/css/Safad.styles.css" asp-append-version="true" /-->
+    <link rel="stylesheet" href="~/css/siteAthlete.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Safad.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
         <div class="container-nav">
             <ul class="navbar-nav">
-                @if(User.Identity.IsAuthentificated)
-                {
-                    <li class="nav-aux">
-                        <img src="@User.FindFirst("ProfilePicture")?.Value" alt="Profile Picture" class="user-profile-picture"  />
-                        <br />
-                        <span>@User.Identity.Name </span>
-                                    
-                    </li>
-
-                }
+                
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
                 </li>
