@@ -32,39 +32,28 @@ namespace Safad.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string email, string password)
         {
- Feature_JuanPablo
             var user = await _userRepository.GetUserByEmailAsync(email);
-
             if (user != null && user.Password == password)
             {
                 var role = await _roleRepository.GetById(user.RoleId);
                 string displayname = "Usuario";
-
-            var user = await _userRepository.GetUserByEmailAsync(email);  
-            if (user != null && user.Password == password)
-            {
-                var role = await _roleRepository.GetById(user.RoleId);
-                string displayName = "Usuario";
- main
                 string profilePicture = "/img/default-profile.png";
                 switch (user.RoleId)
                 {
                     case 1:
- Feature_JuanPablo
                         var userAthlete = await _userAthleteRepository.GetByUserId(user.UserId);
                         if (userAthlete != null)
                         {
                             displayname = userAthlete.NameAthlete;
                             profilePicture = userAthlete.PhotoPath ?? "/img/default-profile.png";
-
+                        }
                         break;
                     case 2:
                         var userCoach = await _userCoachRepository.GetByUserId(user.UserId);
                         if (userCoach != null)
                         {
-                            displayName = userCoach.NameCoach;
+                            displayname = userCoach.NameCoach;
                             profilePicture = userCoach.PhotoPath ?? "/img/default-profile.png";
- main
                         }
                         break;
                 }
@@ -73,7 +62,7 @@ namespace Safad.Controllers
                     new Claim(ClaimTypes.Email, user.UserEmail),
                     new Claim(ClaimTypes.Role, role.RoleName),
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                    new Claim(ClaimTypes.Name, displayName),
+                    new Claim(ClaimTypes.Name, displayname),
                     new Claim("ProfilePicture",profilePicture)                   
                 };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -129,7 +118,7 @@ namespace Safad.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

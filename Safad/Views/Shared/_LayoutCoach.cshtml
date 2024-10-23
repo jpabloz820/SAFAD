@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - Safad</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/siteCoach.css" asp-append-version="true" />
-    <!--link rel="stylesheet" href="~/css/Safad.styles.css" asp-append-version="true" /-->
+    <link rel="stylesheet" href="~/css/UserCoach.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -17,23 +17,23 @@
                     <li class="nav-aux">
                         <img src="@User.FindFirst("ProfilePicture")?.Value" alt="Profile Picture" class="user-profile-picture" />
                         <br />
-                        <span>@User.Identity.Name</span>
+                        <h3 class="text-center" style=""> @User.Identity.Name</h3>
                     </li>
                 }
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                    <a class="nav-link" asp-area="" asp-controller="Coach" asp-action="GetUserCoach">MIS DATOS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">MIS ALUMNOS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">MIS ENTRENOS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">MIS TORNEOS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">SAFAD</a>
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">MIS MENSAJES</a>
                 </li>
                 <li class="nav-aux1">
                     <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout">

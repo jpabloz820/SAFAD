@@ -1,39 +1,39 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutCreate.cshtml";
 }
-
-@model Safad.Models.UserCoach
-
 @{
     ViewData["Title"] = "Crear Entrenador";
 }
 
+@model Safad.Models.UserCoach
 
 <div class="container-create">
     <h2 class ="text-center">Crear Entrenador</h2>
     <hr />
-    <form asp-action="CreateUserCoach" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="NameCoach">Nombre</label>
-            <input type="text" class="form-control" id="NameCoach" name="NameCoach" required />
-        </div>
-        <div class="form-group">
-            <label for="DniCoach">DNI</label>
-            <input type="text" class="form-control" id="DniCoach" name="DniCoach" required />
-        </div>
-        <div class="form-group">
-            <label for="Cellphone">Celular</label>
-            <input type="text" class="form-control" id="Cellphone" name="Cellphone" required />
-        </div>
-        <div class="form-group">
-            <label for="Address">Direccion</label>
-            <input type="text" class="form-control" id="Address" name="Address" required />
-        </div>
-        <div class="form-group">
-            <label for="Photo">Foto</label>
-            <input type="file" class="form-control" id="Photo" name="photo" />
-        </div>
-        <button type="submit" class="btn btn-primary">Crear</button>
-    </form>
+    <div style="max-height: 400px; overflow-y: auto;">
+        <form asp-action="CreateUserCoach" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="NameCoach">Nombre</label>
+                <input type="text" class="form-control" id="NameCoach" name="NameCoach" required />
+            </div>
+            <div class="form-group">
+                <label for="DniCoach">DNI</label>
+                <input type="text" class="form-control" id="DniCoach" name="DniCoach" required />
+            </div>
+            <div class="form-group">
+                <label for="Cellphone">Celular</label>
+                <input type="text" class="form-control" id="Cellphone" name="Cellphone" required />
+            </div>
+            <div class="form-group">
+                <label for="Address">Direccion</label>
+                <input type="text" class="form-control" id="Address" name="Address" required />
+            </div>
+            <div class="form-group">
+                <label for="Photo">Foto</label>
+                <input type="file" class="form-control" id="Photo" name="photo" />
+            </div>
+            <button type="submit" class="btn btn-primary">Crear</button>
+        </form>
+    </div>
 </div>
 
