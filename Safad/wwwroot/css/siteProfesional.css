@@ -17,6 +17,12 @@ html {
     min-height: 100%;
 }
 
+.logout-icon {
+    width: 150px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
 
 body {
     margin: 0;

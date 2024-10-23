@@ -11,8 +11,8 @@ using Safad.Data;
 namespace Safad.Migrations
 {
     [DbContext(typeof(SafadDBContext))]
-    [Migration("20241022234850_Primera Migracion")]
-    partial class PrimeraMigracion
+    [Migration("20241023021831_Tercera migracion Pablo")]
+    partial class TerceramigracionPablo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

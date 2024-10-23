@@ -11,17 +11,20 @@ namespace Safad.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IUserCoachRepository _userCoachRepository;
         private readonly IUserAthleteRepository _userAthleteRepository;
+        private readonly IProfesionalRepository _profesionalRepository;
         private readonly IRoleRepository _roleRepository;
 
         public AccountController(IUserRepository userRepository,
             IRoleRepository roleRepository,
             IUserCoachRepository userCoachRepository,
-            IUserAthleteRepository userAthleteRepository)
+            IUserAthleteRepository userAthleteRepository,
+            IProfesionalRepository profesionalRepository)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _userCoachRepository = userCoachRepository;
             _userAthleteRepository = userAthleteRepository;
+            _profesionalRepository = profesionalRepository;
         }
 
         public IActionResult Login()
@@ -54,6 +57,13 @@ namespace Safad.Controllers
                         {
                             displayname = userCoach.NameCoach;
                             profilePicture = userCoach.PhotoPath ?? "/img/default-profile.png";
+                        }
+                        break;
+                    case 3:
+                        var userProfesional = await _profesionalRepository.GetByUserId(user.UserId);
+                        if (userProfesional != null)
+                        {
+                            displayname = userProfesional.NameProfesional;
                         }
                         break;
                 }

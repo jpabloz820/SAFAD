@@ -27,7 +27,7 @@ namespace Safad.Controllers
         // Método para mostrar el formulario de edición
         public async Task<IActionResult> EditUserProfesional(int id)
         {
-            var profesional = await _profesionalRepository.GetById(id);
+            var profesional = await _profesionalRepository.GetByUserId(id);
             if (profesional == null)
             {
                 return NotFound();
@@ -111,7 +111,7 @@ namespace Safad.Controllers
             int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             // Busca el profesional por el UserId si corresponde
-            var profesional = await _profesionalRepository.GetById(userId + 1);
+            var profesional = await _profesionalRepository.GetByUserId(userId);
             System.Diagnostics.Debug.WriteLine("Llegó al método ListProfesional con ID: " + userId);
 
 
@@ -146,7 +146,8 @@ namespace Safad.Controllers
                 DniProfesional = model.DniProfesional,
                 Cellphone = model.Cellphone,
                 Address = model.Address,
-                UserId = userId
+                UserId = userId,
+                TeamId = model.TeamId
             };
             await _profesionalRepository.Add(newProfesional);
             var user = await _userRepository.GetById(userId);

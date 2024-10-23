@@ -14,5 +14,11 @@ namespace Safad.Repositories
         {
             _context = context;
         }
+
+        public async Task<Profesional> GetByUserId(int userId)
+        {
+            return await _context.Profesional
+                .FirstOrDefaultAsync(uc => uc.UserId == userId);
+        }
     }
 }

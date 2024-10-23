@@ -14,7 +14,7 @@
             <h2 class="text-center">Editar Profesional</h2>
             <form asp-action="EditUserProfesional" method="post" class="mt-4">
                 <input type="hidden" asp-for="@Model.ProfesionalId" /> <!-- Campo oculto para el ID -->
-
+                <input type="hidden" asp-for="@Model.TeamId" /> <!-- Campo oculto para el ID -->
                 <div class="form-group">
                     <label asp-for="@Model.NameProfesional" class="control-label"></label>
                     <input asp-for="@Model.NameProfesional" class="form-control" />
