@@ -21,20 +21,20 @@ Public Class AccountControllerTests
         Dim mockUserAthleteRepo As New Mock(Of IUserAthleteRepository)()
 
         Dim validUser As New User() With {
-            .UserId = 2,
-            .UserEmail = "juanes2113@gmail.com",
-            .Password = "123456789",
-            .RoleId = 2,
+            .UserId = 1,
+            .UserEmail = "Juanes2113@hotmail.com",
+            .Password = "1234",
+            .RoleId = 1,
             .Registration = True
         }
 
         Dim validRole As New Role() With {
-            .RoleId = 2,
-            .RoleName = "Entrenador"
+            .RoleId = 1,
+            .RoleName = "Deportista"
         }
 
-        mockUserRepo.Setup(Function(repo) repo.GetUserByEmailAsync("juanes2113@gmail.com")).ReturnsAsync(validUser)
-        mockRoleRepo.Setup(Function(repo) repo.GetById(2)).ReturnsAsync(validRole)
+        mockUserRepo.Setup(Function(repo) repo.GetUserByEmailAsync("Juanes2113@hotmail.com")).ReturnsAsync(validUser)
+        mockRoleRepo.Setup(Function(repo) repo.GetById(1)).ReturnsAsync(validRole)
 
         ' Simular el HttpContext con Claims y Authentication
         Dim httpContextMock As New Mock(Of HttpContext)()
@@ -59,12 +59,12 @@ Public Class AccountControllerTests
         }
 
         ' Act
-        Dim result As IActionResult = Await controller.Login("juanes2113@gmail.com", "123456789")
+        Dim result As IActionResult = Await controller.Login("Juanes2113@hotmail.com", "1234")
 
         ' Assert
         Dim redirectResult = Assert.IsType(Of RedirectToActionResult)(result)
-        Assert.Equal("IndexCoach", redirectResult.ActionName)
-        Assert.Equal("Coach", redirectResult.ControllerName)
+        Assert.Equal("IndexAthlete", redirectResult.ActionName)
+        Assert.Equal("Athlete", redirectResult.ControllerName)
     End Function
 
 End Class
