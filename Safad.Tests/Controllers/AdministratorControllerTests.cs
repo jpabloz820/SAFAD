@@ -77,7 +77,7 @@ public class AdministratorControllerTests
             HttpContext = new DefaultHttpContext() { User = userIdClaim }
         };
 
-        var userAdministrative = new UserAdministrative { UserAdministrativeId = 1, NameAdministrative = "Administrative test" };
+        var userAdministrative = new UserAdministrative { UserAdministrativeId = 1, NameAdministrative = "Administrative Test" };
 
         _userAdministrativeRepositoryMock.Setup(repo => repo.GetUserByIdUserAsync(It.IsAny<int>()))
             .ReturnsAsync(userAdministrative);
