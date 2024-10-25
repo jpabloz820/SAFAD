@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Safad.Dtos;
 using Safad.Interfaces;
 using Safad.Models;
 using Safad.Repositories;
@@ -78,6 +79,112 @@ namespace Safad.Controllers
                 return View();
             }
 
+        [HttpGet]
+        public async Task<IActionResult> GetUserAthlete()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
+            int userId = int.Parse(userIdClaim.Value);
+            var userAthlete = await _userAthleteRepository.GetByUserId(userId);
+            var user = await _userRepository.GetById(userId);
+            if (userAthlete == null || user == null)
+            {
+                return NotFound("No se encontraron datos del Deportista para este usuario.");
+            }
+            var userAthleteDTO = new UserAthleteDTO
+            {
+                NameAthlete = userAthlete.NameAthlete,
+                DniAthlete = userAthlete.DniAthlete,
+                Cellphone = userAthlete.Cellphone,
+                Address = userAthlete.Address,
+                Age = userAthlete.Age,
+                Weight = userAthlete.Weight,
+                PhotoPath = userAthlete.PhotoPath,
+                Height = userAthlete.Height,
+                Position = userAthlete.Position,
+                UserEmail = user.UserEmail,
+                Password = new string('*', user.Password.Length)
+            };
+            return View(userAthleteDTO);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateUserAthlete()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
+            int userId = int.Parse(userIdClaim.Value);
+            var userAthlete = await _userAthleteRepository.GetByUserId(userId);
+            if (userAthlete == null)
+            {
+                return NotFound("No se encontraron datos del entrenador.");
+            }
+            var updateUserAthleteDTO = new UpdateUserAthleteDTO
+            {
+                NameAthlete = userAthlete.NameAthlete,
+                DniAthlete = userAthlete.DniAthlete,
+                Cellphone = userAthlete.Cellphone,
+                Address = userAthlete.Address,
+                Age = userAthlete.Age,
+                Weight = userAthlete.Weight,
+                PhotoPath = userAthlete.PhotoPath,
+                Height = userAthlete.Height,
+                Position = userAthlete.Position,
+                
+            };
+            return View(updateUserAthleteDTO);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserAthlete(UpdateUserAthleteDTO model, IFormFile photo)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
+            int userId = int.Parse(userIdClaim.Value);
+            var userAthlete = await _userAthleteRepository.GetByUserId(userId);
+            if (userAthlete == null)
+            {
+                return NotFound("No se encontraron datos del Deportista.");
+            }
+            userAthlete.NameAthlete = model.NameAthlete;
+            userAthlete.DniAthlete = model.DniAthlete;
+            userAthlete.Cellphone = model.Cellphone;
+            userAthlete.Address = model.Address;
+            userAthlete.Age = model.Age;
+            userAthlete.Weight  = model.Weight;
+            userAthlete.Height = model.Height;
+            userAthlete.Position = userAthlete.Position;
+
+
+            if (photo != null && photo.Length > 0)
+            {
+                var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+                var filePath = Path.Combine(directory, photo.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await photo.CopyToAsync(stream);
+                }
+                userAthlete.PhotoPath = $"/img/{photo.FileName}";
+            }
+            await _userAthleteRepository.Update(userAthlete);
+            return RedirectToAction("GetUserAthlete");
+        }
+
     }
+    }
+
+
 
