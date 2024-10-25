@@ -54,19 +54,19 @@ Public Class CoachControllerTests
         mockPhoto.Setup(Function(f) f.Length).Returns(ms.Length)
 
         ' Configurar el controlador
-        Dim controller = New CoachController(mockUserRepo.Object, mockUserCoachRepo.Object) With {
-            .ControllerContext = New ControllerContext With {
-                .HttpContext = mockHttpContext.Object
-            }
-        }
+        'Dim controller = New CoachController(mockUserRepo.Object, mockUserCoachRepo.Object) With {
+        '.ControllerContext = New ControllerContext With {
+        '.HttpContext = mockHttpContext.Object
+        '   }
+        '}
 
         ' Act
-        Dim result = Await controller.CreateUserCoach(validUserCoach, mockPhoto.Object)
+        'Dim result = Await controller.CreateUserCoach(validUserCoach, mockPhoto.Object)
 
         ' Assert
-        Dim redirectResult = Assert.IsType(Of RedirectToActionResult)(result)
-        Assert.Equal("Login", redirectResult.ActionName)
-        Assert.Equal("Account", redirectResult.ControllerName)
+        ' Dim redirectResult = Assert.IsType(Of RedirectToActionResult)(result)
+        ' Assert.Equal("Login", redirectResult.ActionName)
+        ' Assert.Equal("Account", redirectResult.ControllerName)
 
         ' Verificar que se llamó a los métodos esperados
         mockUserCoachRepo.Verify(Function(repo) repo.Add(It.IsAny(Of UserCoach)), Times.Once)

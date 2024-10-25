@@ -9,12 +9,18 @@ namespace Safad.Controllers
     public class CoachController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly ITeamRepository _teamRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IUserCoachRepository _userCoachRepository;
 
         public CoachController(IUserRepository userRepository,
+            ITeamRepository teamRepository,
+            ICategoryRepository categoryRepository,
             IUserCoachRepository userCoachRepository)
         {
             _userRepository = userRepository;
+            _teamRepository = teamRepository;
+            _categoryRepository = categoryRepository;
             _userCoachRepository = userCoachRepository;
         }
         public IActionResult CreateUserCoach()
@@ -157,6 +163,36 @@ namespace Safad.Controllers
             }
             await _userCoachRepository.Update(userCoach);
             return RedirectToAction("GetUserCoach");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTeam()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
+            int userId = int.Parse(userIdClaim.Value);
+            var userCoach = await _userCoachRepository.GetByUserId(userId);
+            if (userCoach == null)
+            {
+                return NotFound("No se encontraron datos del entrenador.");
+            }
+            var team = await _teamRepository.GetTeamByUserCoachId(userCoach.UserCoachId);
+            if (userCoach == null)
+            {
+                return NotFound("No se encontró el equipo con los datos del entrenador.");
+            }
+            var category = await _categoryRepository.GetById(team.CategoryId);
+            var teamDto = new TeamDto
+            {
+                TeamName = team.TeamName,
+                CategoryName = category.CategoryName,
+                NumberAthlete = 0,
+                TeamLogo = team.TeamLogo
+            };
+            return View(teamDto);
         }
     }
 }

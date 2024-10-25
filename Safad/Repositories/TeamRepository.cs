@@ -13,5 +13,15 @@ namespace Safad.Repositories
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Obtiene un equipo por el Id de Entrenador
+        /// </summary>
+        /// <param name="UserCoachId">Id del Entrenador para buscar</param>
+        public async Task<Team> GetTeamByUserCoachId(int UserCoachId)
+        {
+            return await _context.Teams
+                .FirstOrDefaultAsync(u => u.UserCoachId == UserCoachId);
+        }
     }
 }
