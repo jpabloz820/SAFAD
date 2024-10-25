@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAthlete.cshtml";
+}
+
+@model Safad.Dtos.UpdateUserAthleteDTO
+
+<div class="container-getdata">
+    <h2 class="text-center">ACTUALIZAR MIS DATOS</h2>
+    <form asp-action="UpdateUserAthlete" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="NameAthlete">Nombre</label>
+            <input type="text" class="form-control" name="NameAthlete" value="@Model.NameAthlete" required />
+        </div>
+        <div class="form-group">
+            <label for="DniAthlete">DNI</label>
+            <input type="text" class="form-control" name="DniAthlete" value="@Model.DniAthlete" required />
+        </div>
+        <div class="form-group">
+            <label for="Cellphone">Celular</label>
+            <input type="text" class="form-control" name="Cellphone" value="@Model.Cellphone" required />
+        </div>
+        <div class="form-group">
+            <label for="Address">Direccion</label>
+            <input type="text" class="form-control" name="Address" value="@Model.Address" required />
+        </div>
+        <div class="form-group">
+            <label for="Age">Edad</label>
+            <input type="text" class="form-control" name="Age" value="@Model.Age" required />
+        </div>
+        <div class="form-group">
+            <label for="Weight">Peso</label>
+            <input type="text" class="form-control" name="Weight" value="@Model.Weight" required />
+        </div>
+        <div class="form-group">
+            <label for="Height">Estatura</label>
+            <input type="text" class="form-control" name="Height" value="@Model.Height" required />
+        </div>
+        <div class="form-group">
+            <label for="Photo">Foto</label>
+            <input type="file" class="form-control" id="Photo" name="photo" />
+        </div>
+        <button type="submit" class="btn btn-dark">Actualizar</button>
+    </form>
+</div>

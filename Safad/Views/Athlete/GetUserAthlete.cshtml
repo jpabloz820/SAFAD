@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAthlete.cshtml";
+}
+
+@model Safad.Dtos.UserAthleteDTO
+
+<div class="container-getdata">
+    <h2 class="text-center">MIS DATOS</h2>
+
+    <p><strong>Nombre:</strong> @Model.NameAthlete</p>
+    <p><strong>DNI:</strong> @Model.DniAthlete</p>
+    <p><strong>Edad:</strong> @Model.Age</p>
+    <p><strong>Celular:</strong> @Model.Cellphone</p>
+    <p><strong>Peso:</strong> @Model.Weight</p>
+    <p><strong>Estatura:</strong> @Model.Height</p>
+    <p><strong>Posición:</strong> @Model.Position</p>
+    <p><strong>Dirección:</strong> @Model.Address</p>
+    <p><strong></strong> <img src="@Model.PhotoPath" alt="Foto del deportista" class="user-picture" /></p>
+    <p><strong>Correo:</strong> @Model.UserEmail</p>
+    <p><strong>Contraseña:</strong> @Model.Password</p>
+    <div class="btn-container">
+        <a class="btn btn-dark" asp-area="" asp-controller="Athlete" asp-action="UpdateUserAthlete">Actualizar</a>
+        <a class="btn btn-dark" id="btn" asp-area="" asp-controller="Athlete" asp-action="">Actualizar Contraseña</a>
+    </div>
+</div>
