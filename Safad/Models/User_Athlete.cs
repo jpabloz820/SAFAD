@@ -13,8 +13,7 @@
         public float Height { get; set; }
         public string Position { get; set; }
         public int UserId { get; set; }
-        public int TeamId { get; set; }
         public User User { get; set; }
-        public Team Team { get; set; }
+        public TeamUserAthlete TeamUserAthlete { get; set; }
     }
 }
