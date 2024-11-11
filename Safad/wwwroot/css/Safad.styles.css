@@ -117,3 +117,53 @@
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+.content-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+#aux11 {
+    color: black;
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+#parrafo {
+    font-size: 1.1em;
+    font-weight: 200;
+    text-align: justify;
+}
+
+
+
+
+
+/* Estilo para centrar el contenedor de los íconos en el medio de la pantalla */
+.container-contacto {
+    display: flex;
+    justify-content: center; /* Centra los íconos horizontalmente */
+    align-items: center; /* Centra los íconos verticalmente */
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    width: 100vw; /* Ocupa todo el ancho de la pantalla */
+    gap: 30px; /* Espacio entre los íconos */
+}
+
+.iconos-contacto {
+    width: 150px; /* Aumenta el tamaño de los íconos */
+    height: 150px; /* Altura de los íconos */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para el efecto hover */
+}
+
+    /* Efecto hover para agrandar y sombrear los íconos */
+    .iconos-contacto:hover {
+        transform: scale(1.2); /* Aumenta el tamaño del ícono al pasar el cursor */
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Agrega una sombra */
+    }
+
