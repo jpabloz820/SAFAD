@@ -94,7 +94,7 @@ namespace Safad.Controllers
             {
                 return NotFound("No se encontraron datos del Deportista para este usuario.");
             }
-            var userAthleteDTO = new UserAthleteDTO
+            var userAthleteDTO = new UserAthleteDto
             {
                 NameAthlete = userAthlete.NameAthlete,
                 DniAthlete = userAthlete.DniAthlete,
