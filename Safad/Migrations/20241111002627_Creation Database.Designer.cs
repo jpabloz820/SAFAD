@@ -11,8 +11,8 @@ using Safad.Data;
 namespace Safad.Migrations
 {
     [DbContext(typeof(SafadDBContext))]
-    [Migration("20241025005017_Dorsal")]
-    partial class Dorsal
+    [Migration("20241111002627_Creation Database")]
+    partial class CreationDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,10 +27,7 @@ namespace Safad.Migrations
             modelBuilder.Entity("Safad.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
                     b.Property<string>("CategoryDescription")
                         .IsRequired()
@@ -45,6 +42,31 @@ namespace Safad.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories", (string)null);
+                });
+
+            modelBuilder.Entity("Safad.Models.Division", b =>
+                {
+                    b.Property<int>("DivisionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("DivisionName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("DivisionId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Divisions", (string)null);
                 });
 
             modelBuilder.Entity("Safad.Models.Profesional", b =>
@@ -105,6 +127,9 @@ namespace Safad.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("DivisionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MaxPlayers")
                         .HasColumnType("int");
 
@@ -127,6 +152,8 @@ namespace Safad.Migrations
                     b.HasKey("TeamId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("DivisionId");
 
                     b.HasIndex("UserCoachId")
                         .IsUnique();
@@ -174,11 +201,9 @@ namespace Safad.Migrations
 
                     b.HasKey("TeamUserAthleteId");
 
-                    b.HasIndex("TeamId")
-                        .IsUnique();
+                    b.HasIndex("TeamId");
 
-                    b.HasIndex("UserAthleteId")
-                        .IsUnique();
+                    b.HasIndex("UserAthleteId");
 
                     b.ToTable("TeamUserAthletes", (string)null);
                 });
@@ -305,6 +330,17 @@ namespace Safad.Migrations
                     b.ToTable("UserAthletes", (string)null);
                 });
 
+            modelBuilder.Entity("Safad.Models.Division", b =>
+                {
+                    b.HasOne("Safad.Models.Category", "Category")
+                        .WithMany("Division")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Safad.Models.Profesional", b =>
                 {
                     b.HasOne("Safad.Models.User", "User")
@@ -324,6 +360,12 @@ namespace Safad.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Safad.Models.Division", "Division")
+                        .WithMany("Teams")
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Safad.Models.UserCoach", "UserCoach")
                         .WithOne("Team")
                         .HasForeignKey("Safad.Models.Team", "UserCoachId")
@@ -331,6 +373,8 @@ namespace Safad.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Division");
 
                     b.Navigation("UserCoach");
                 });
@@ -357,14 +401,14 @@ namespace Safad.Migrations
             modelBuilder.Entity("Safad.Models.TeamUserAthlete", b =>
                 {
                     b.HasOne("Safad.Models.Team", "Team")
-                        .WithOne("TeamUserAthlete")
-                        .HasForeignKey("Safad.Models.TeamUserAthlete", "TeamId")
+                        .WithMany("TeamUserAthletes")
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Safad.Models.User_Athlete", "User_Athlete")
-                        .WithOne("TeamUserAthlete")
-                        .HasForeignKey("Safad.Models.TeamUserAthlete", "UserAthleteId")
+                        .WithMany("TeamUserAthletes")
+                        .HasForeignKey("UserAthleteId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -408,6 +452,13 @@ namespace Safad.Migrations
 
             modelBuilder.Entity("Safad.Models.Category", b =>
                 {
+                    b.Navigation("Division");
+
+                    b.Navigation("Teams");
+                });
+
+            modelBuilder.Entity("Safad.Models.Division", b =>
+                {
                     b.Navigation("Teams");
                 });
 
@@ -427,8 +478,7 @@ namespace Safad.Migrations
                     b.Navigation("TeamProfessional")
                         .IsRequired();
 
-                    b.Navigation("TeamUserAthlete")
-                        .IsRequired();
+                    b.Navigation("TeamUserAthletes");
                 });
 
             modelBuilder.Entity("Safad.Models.UserCoach", b =>
@@ -439,8 +489,7 @@ namespace Safad.Migrations
 
             modelBuilder.Entity("Safad.Models.User_Athlete", b =>
                 {
-                    b.Navigation("TeamUserAthlete")
-                        .IsRequired();
+                    b.Navigation("TeamUserAthletes");
                 });
 #pragma warning restore 612, 618
         }

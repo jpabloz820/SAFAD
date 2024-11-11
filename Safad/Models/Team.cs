@@ -9,9 +9,11 @@
         public int MinPlayers { get; set; }
         public int CategoryId { get; set; }
         public int UserCoachId { get; set; }
+        public int DivisionId { get; set; }
+        public Division Division { get; set; }
         public Category Category { get; set; }
         public UserCoach UserCoach { get; set; }
         public TeamProfessional TeamProfessional { get; set; }
-        public TeamUserAthlete TeamUserAthlete { get; set; }
+        public ICollection<TeamUserAthlete> TeamUserAthletes { get; set; }
     }
 }

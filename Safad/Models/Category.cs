@@ -6,5 +6,6 @@
         public string CategoryName { get; set; }
         public string CategoryDescription { get; set; }
         public ICollection<Team> Teams { get; set; }
+        public ICollection<Division> Division { get; set; }
     }
 }

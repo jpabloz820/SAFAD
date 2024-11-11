@@ -4,11 +4,60 @@
 
 @model Safad.Dtos.TeamDto
 
-<div class="container-getdata">
-    <h2 class="text-center">MIS DATOS</h2>
+<div class="container-getteam">
+    <h2 class="text-center">MI EQUIPO</h2>
 
-    <p><strong>Equipo:</strong> @Model.TeamName</p>
-    <p><strong>Categoria:</strong> @Model.TeamLogo</p>
-    <p><strong>N° Deportistas:</strong></p>
-    <p><strong></strong> @Model.TeamLogo</p>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th><p><strong>Equipo:</strong> @Model.TeamName</p></th>
+                <th><p><strong>Categoria:</strong> @Model.CategoryName</p></th>
+                <th><p><strong>División:</strong> @Model.DivisionName</p></th>
+                <th><p><strong>N° Deportistas:</strong> @Model.NumberAthlete</p></th>
+                <th></th>
+                <th><img src="@Model.TeamLogo" alt="Logo del equipo" style="max-width: 50px; max-height: 50px;" /></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th colspan="6">
+                    <div class="table-responsive" style="max-height: 320px; overflow-y: auto;">
+                        <table class="table table-light table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nombre</th>
+                                    <th>DNI</th>
+                                    <th>Teléfono</th>
+                                    <th>Dirección</th>
+                                    <th>Edad</th>
+                                    <th>Email</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var athlete in Model.Athletes)
+                                {
+                                    <tr>
+                                        <td><img src="@athlete.PhotoPath" alt="Foto" style="max-width: 60px; max-height: 60px;" /></td>
+                                        <td>@athlete.NameAthlete</td>
+                                        <td>@athlete.DniAthlete</td>
+                                        <td>@athlete.Cellphone</td>
+                                        <td>@athlete.Address</td>
+                                        <td>@athlete.Age</td>
+                                        <td>@athlete.UserEmail</td>
+                                        <td>
+                                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                                                <img src="~/img/correo.png" alt="correo" class="correo-icon">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
 </div>

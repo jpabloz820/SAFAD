@@ -32,4 +32,32 @@
     margin-left: 10%;
 }
 
+.container-getteam {
+    width: 1000px;
+    height:470px;
+    padding: 20px;
+    background-color: rgba(248, 252, 184, 0.7);
+    border-radius: 8px;
+    margin: 0 auto;
+}
 
+.correo-icon {
+    width: 30px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.correo-icon:hover {
+    transform: scale(1.1);
+}
+
+.container-phases {
+    width: 1157px;
+    height: 510px;
+    padding: 20px;
+    background-color: rgba(248, 252, 184, 0.7);
+    position: absolute;
+    top: -20px;
+    left: 8px 
+}

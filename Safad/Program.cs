@@ -23,6 +23,7 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<ITeamProfessionalRepository, TeamProfessionalRepository>();
 builder.Services.AddScoped<ITeamUserAthleteRepository, TeamUserAthleteRepository>();
+builder.Services.AddScoped<IDivisionRepository, DivisionRepository>();
 // Add services of cookies for authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
