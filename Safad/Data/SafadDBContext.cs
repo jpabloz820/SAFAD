@@ -16,6 +16,7 @@ namespace Safad.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<TeamProfessional> TeamProfessionals { get; set; }
         public DbSet<TeamUserAthlete> TeamUserAthletes { get; set; }
+        public DbSet<Division> Divisions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // override OnMod
         {
@@ -88,6 +89,7 @@ namespace Safad.Data
             modelBuilder.Entity<Category>(tb =>
             {
                 tb.HasKey(col => col.CategoryId);
+                tb.Property(col => col.CategoryId).IsRequired().ValueGeneratedNever(); ;
                 tb.Property(col => col.CategoryName).IsRequired().HasMaxLength(50);
                 tb.Property(col => col.CategoryDescription).HasMaxLength(255);
             });
@@ -106,6 +108,10 @@ namespace Safad.Data
                 tb.HasOne(t => t.Category)
                     .WithMany(c => c.Teams)
                     .HasForeignKey(t => t.CategoryId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                tb.HasOne(t => t.Division)
+                    .WithMany(d => d.Teams)
+                    .HasForeignKey(t => t.DivisionId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
             modelBuilder.Entity<TeamProfessional>(tb =>
@@ -131,12 +137,23 @@ namespace Safad.Data
                 tb.Property(col => col.UserAthleteId).IsRequired();
                 tb.Property(col => col.FootballNumber).IsRequired().HasMaxLength(25);
                 tb.HasOne(t => t.Team)
-                    .WithOne(uc => uc.TeamUserAthlete)
-                    .HasForeignKey<TeamUserAthlete>(t => t.TeamId)
+                    .WithMany(uc => uc.TeamUserAthletes)
+                    .HasForeignKey(t => t.TeamId)
                     .OnDelete(DeleteBehavior.Restrict);
                 tb.HasOne(t => t.User_Athlete)
-                    .WithOne(uc => uc.TeamUserAthlete)
-                    .HasForeignKey<TeamUserAthlete>(t => t.UserAthleteId)
+                    .WithMany(uc => uc.TeamUserAthletes)
+                    .HasForeignKey(t => t.UserAthleteId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            modelBuilder.Entity<Division>(tb =>
+            {
+                tb.HasKey(col => col.DivisionId);
+                tb.Property(col => col.DivisionId).IsRequired().ValueGeneratedNever();
+                tb.Property(col => col.DivisionName).IsRequired().HasMaxLength(100);
+                tb.Property(col => col.Description).HasMaxLength(255);
+                tb.HasOne(d => d.Category)
+                    .WithMany(c => c.Division)
+                    .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -149,6 +166,7 @@ namespace Safad.Data
             modelBuilder.Entity<Category>().ToTable("Categories");
             modelBuilder.Entity<TeamProfessional>().ToTable("TeamProfessionals");
             modelBuilder.Entity<TeamUserAthlete>().ToTable("TeamUserAthletes");
+            modelBuilder.Entity<Division>().ToTable("Divisions");
         }
     }
 }

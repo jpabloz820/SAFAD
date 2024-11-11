@@ -14,6 +14,6 @@
         public string Position { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        public TeamUserAthlete TeamUserAthlete { get; set; }
+        public ICollection<TeamUserAthlete> TeamUserAthletes { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Safad.Dtos;
 using Safad.Interfaces;
 using Safad.Models;
+using Safad.Repositories;
 using System.Security.Claims;
 
 namespace Safad.Controllers
@@ -10,18 +11,27 @@ namespace Safad.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly ITeamRepository _teamRepository;
+        private readonly IDivisionRepository _divisionRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUserCoachRepository _userCoachRepository;
+        private readonly IUserAthleteRepository _userAthleteRepository;
+        private readonly ITeamUserAthleteRepository _teamUserAthleteRepository;
 
         public CoachController(IUserRepository userRepository,
             ITeamRepository teamRepository,
             ICategoryRepository categoryRepository,
-            IUserCoachRepository userCoachRepository)
+            IDivisionRepository divisionRepository,
+            IUserCoachRepository userCoachRepository,
+            IUserAthleteRepository userAthleteRepository,
+            ITeamUserAthleteRepository teamUserAthleteRepository)
         {
             _userRepository = userRepository;
             _teamRepository = teamRepository;
             _categoryRepository = categoryRepository;
+            _divisionRepository = divisionRepository;
             _userCoachRepository = userCoachRepository;
+            _userAthleteRepository = userAthleteRepository;
+            _teamUserAthleteRepository = teamUserAthleteRepository;
         }
         public IActionResult CreateUserCoach()
         {
@@ -185,14 +195,33 @@ namespace Safad.Controllers
                 return NotFound("No se encontró el equipo con los datos del entrenador.");
             }
             var category = await _categoryRepository.GetById(team.CategoryId);
+            var division = await _divisionRepository.GetById(team.DivisionId);
+            var teamUserAthletes = await _teamUserAthleteRepository.GetTeamUserAthletesByTeamId(team.TeamId);
+            var athletesDto = teamUserAthletes.Select(athlete => new UserAthleteDto
+            {
+                PhotoPath = athlete.User_Athlete.PhotoPath,
+                NameAthlete = athlete.User_Athlete.NameAthlete,
+                DniAthlete = athlete.User_Athlete.DniAthlete,
+                Cellphone = athlete.User_Athlete.Cellphone,
+                Address = athlete.User_Athlete.Address,
+                Age = athlete.User_Athlete.Age,
+                UserEmail = athlete.User_Athlete.User.UserEmail
+            }).ToList();
             var teamDto = new TeamDto
             {
                 TeamName = team.TeamName,
                 CategoryName = category.CategoryName,
-                NumberAthlete = 0,
-                TeamLogo = team.TeamLogo
+                DivisionName = division.DivisionName,
+                NumberAthlete = athletesDto.Count(),
+                TeamLogo = team.TeamLogo,
+                Athletes = athletesDto
             };
             return View(teamDto);
+        }
+
+        public async Task<IActionResult> GetPhase()
+        {
+            return View();
         }
     }
 }
