@@ -24,6 +24,10 @@ builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<ITeamProfessionalRepository, TeamProfessionalRepository>();
 builder.Services.AddScoped<ITeamUserAthleteRepository, TeamUserAthleteRepository>();
 builder.Services.AddScoped<IDivisionRepository, DivisionRepository>();
+builder.Services.AddScoped<IMetricRepository, MetricRepository>();
+builder.Services.AddScoped<IPhaseRepository, PhaseRepository>();
+builder.Services.AddScoped<IConfigurationMetricRepository, ConfigurationMetricRepository>();
+builder.Services.AddScoped<IGoalIndicatorRepository, GoalIndicatorRepository>();
 // Add services of cookies for authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

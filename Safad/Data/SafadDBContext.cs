@@ -17,6 +17,10 @@ namespace Safad.Data
         public DbSet<TeamProfessional> TeamProfessionals { get; set; }
         public DbSet<TeamUserAthlete> TeamUserAthletes { get; set; }
         public DbSet<Division> Divisions { get; set; }
+        public DbSet<Phase> Phases { get; set; }
+        public DbSet<Metric> Metrics { get; set; }
+        public DbSet<ConfigurationMetric> ConfigurationMetrics { get; set; }
+        public DbSet<GoalIndicator> GoalIndicators { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // override OnMod
         {
@@ -156,6 +160,51 @@ namespace Safad.Data
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
+            modelBuilder.Entity<Phase>().HasData(
+                new Phase { PhaseId = 1, PhaseName = "Fase de Preparación Física" },
+                new Phase { PhaseId = 2, PhaseName = "Fase Técnica y Táctica" },
+                new Phase { PhaseId = 3, PhaseName = "Fase de Integración Táctica Colectiva" },
+                new Phase { PhaseId = 4, PhaseName = "Fase de Competencia" },
+                new Phase { PhaseId = 5, PhaseName = "Fase de Recuperación" },
+                new Phase { PhaseId = 6, PhaseName = "Fase de Transición" },
+                new Phase { PhaseId = 7, PhaseName = "Fase de Análisis de Rendimiento" }
+            );
+            modelBuilder.Entity<Metric>(tb =>
+            {
+                tb.HasKey(col => col.MetricId);
+                tb.Property(col => col.MetricId).IsRequired().ValueGeneratedNever();
+                tb.Property(col => col.MetricName).IsRequired().HasMaxLength(100);
+                tb.Property(col => col.Indicator).IsRequired();
+                tb.Property(col => col.Measure).IsRequired().HasMaxLength(25);
+            });
+            modelBuilder.Entity<ConfigurationMetric>()
+            .HasKey(pcm => new { pcm.PhaseId, pcm.MetricId, pcm.CategoryId });
+            modelBuilder.Entity<ConfigurationMetric>()
+                .HasOne(pcm => pcm.Phase)
+                .WithMany(p => p.ConfigurationMetric)
+                .HasForeignKey(pcm => pcm.PhaseId);
+            modelBuilder.Entity<ConfigurationMetric>()
+                .HasOne(pcm => pcm.Metric)
+                .WithMany(m => m.ConfigurationMetric)
+                .HasForeignKey(pcm => pcm.MetricId);
+            modelBuilder.Entity<ConfigurationMetric>()
+                .HasOne(pcm => pcm.Category)
+                .WithMany(c => c.ConfigurationMetric)
+                .HasForeignKey(pcm => pcm.CategoryId);
+            modelBuilder.Entity<GoalIndicator>(tb =>
+            {
+                tb.HasKey(gi => gi.GoalIndicatorId);
+                tb.Property(col => col.GoalIndicatorId).IsRequired().ValueGeneratedNever();
+                tb.Property(gi => gi.MeasureAthlete).IsRequired();
+                tb.HasOne(gi => gi.User_Athlete)
+                    .WithMany(ua => ua.GoalIndicator)
+                    .HasForeignKey(gi => gi.UserAthleteId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                tb.HasOne(gi => gi.Metric)
+                    .WithMany(m => m.GoalIndicator)
+                    .HasForeignKey(gi => gi.MetricId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Role>().ToTable("Roles");
@@ -167,6 +216,10 @@ namespace Safad.Data
             modelBuilder.Entity<TeamProfessional>().ToTable("TeamProfessionals");
             modelBuilder.Entity<TeamUserAthlete>().ToTable("TeamUserAthletes");
             modelBuilder.Entity<Division>().ToTable("Divisions");
+            modelBuilder.Entity<Phase>().ToTable("Phases");
+            modelBuilder.Entity<Metric>().ToTable("Metrics");
+            modelBuilder.Entity<ConfigurationMetric>().ToTable("ConfigurationMetrics");
+            modelBuilder.Entity<GoalIndicator>().ToTable("GoalIndicators");
         }
     }
 }

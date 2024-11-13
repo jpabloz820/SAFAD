@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCoach.cshtml";
+}
+
+<partial name="_NavCoach" />
+
+<div class="container-phase">
+    <div class="container-metric">
+        <h2 class="text-center">Métricas</h2>
+        <hr>
+        <form asp-action="CreateMetric" method="post">
+            <div class="form-group row mb-3">
+                <label for="MetricName" class="col-sm-3 col-form-label text-end">Métrica:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="MetricName" name="MetricName" required />
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label for="Indicator" class="col-sm-3 col-form-label text-end">Indicador:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="Indicator" name="Indicator" required />
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label for="Measure" class="col-sm-3 col-form-label text-end">Unidad:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="Measure" name="Measure" required />
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label for="PhaseId" class="col-sm-3 col-form-label text-end">Fase</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="PhaseId" name="PhaseId" asp-items="@(new SelectList((IEnumerable<Phase>)ViewData["Phases"], "PhaseId", "PhaseName"))" required>
+                        <option value="">Seleccione una Fase</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label for="CategoryId" class="col-sm-3 col-form-label text-end">Categoría</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="CategoryId" name="CategoryId" asp-items="@(new SelectList((IEnumerable<Category>)ViewData["Categories"], "CategoryId", "CategoryName"))" required>
+                        <option value="">Seleccione una Categoría</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-9 offset-sm-3">
+                    <button type="submit" id="createMetrci" class="btn btn-dark">Crear Métrica</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

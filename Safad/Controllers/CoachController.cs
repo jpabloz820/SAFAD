@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Safad.Dtos;
 using Safad.Interfaces;
 using Safad.Models;
@@ -11,27 +12,39 @@ namespace Safad.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly ITeamRepository _teamRepository;
+        private readonly IPhaseRepository _phaseRepository;
+        private readonly IMetricRepository _metricRepository;
         private readonly IDivisionRepository _divisionRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUserCoachRepository _userCoachRepository;
         private readonly IUserAthleteRepository _userAthleteRepository;
+        private readonly IGoalIndicatorRepository _goalIndicatorRepository;
         private readonly ITeamUserAthleteRepository _teamUserAthleteRepository;
+        private readonly IConfigurationMetricRepository _configurationMetricRepository;
 
         public CoachController(IUserRepository userRepository,
             ITeamRepository teamRepository,
+            IPhaseRepository phaseRepository,
+            IMetricRepository metricRepository,
             ICategoryRepository categoryRepository,
             IDivisionRepository divisionRepository,
             IUserCoachRepository userCoachRepository,
             IUserAthleteRepository userAthleteRepository,
-            ITeamUserAthleteRepository teamUserAthleteRepository)
+            IGoalIndicatorRepository goalIndicatorRepository,
+            ITeamUserAthleteRepository teamUserAthleteRepository,
+            IConfigurationMetricRepository configurationMetricRepository)
         {
             _userRepository = userRepository;
             _teamRepository = teamRepository;
+            _phaseRepository = phaseRepository;
+            _metricRepository = metricRepository;
             _categoryRepository = categoryRepository;
             _divisionRepository = divisionRepository;
             _userCoachRepository = userCoachRepository;
             _userAthleteRepository = userAthleteRepository;
+            _goalIndicatorRepository = goalIndicatorRepository;
             _teamUserAthleteRepository = teamUserAthleteRepository;
+            _configurationMetricRepository = configurationMetricRepository;
         }
         public IActionResult CreateUserCoach()
         {
@@ -78,7 +91,7 @@ namespace Safad.Controllers
             var user = await _userRepository.GetById(userId);
             user.Registration = true;
             await _userRepository.Update(user);
-            return RedirectToAction("Login", "Account"); ;
+            return RedirectToAction("Login", "Account");
         }
 
         public IActionResult IndexCoach()
@@ -190,7 +203,7 @@ namespace Safad.Controllers
                 return NotFound("No se encontraron datos del entrenador.");
             }
             var team = await _teamRepository.GetTeamByUserCoachId(userCoach.UserCoachId);
-            if (userCoach == null)
+            if (team == null)
             {
                 return NotFound("No se encontró el equipo con los datos del entrenador.");
             }
@@ -219,8 +232,80 @@ namespace Safad.Controllers
             return View(teamDto);
         }
 
-        public async Task<IActionResult> GetPhase()
+        public IActionResult GetPhase()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateMetric()
+        {
+            ViewData["Phases"] = await _phaseRepository.GetAll();
+            ViewData["Categories"] = await _categoryRepository.GetAll();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateMetric(MetricDto model)
+        {
+            var lastMetric = await _metricRepository.GetSequence(new Metric());
+            int newMetricId = (lastMetric != null) ? lastMetric.MetricId + 1 : 1;
+            var metric = new Metric
+            {
+                MetricId = newMetricId,
+                MetricName = model.MetricName,
+                Indicator = model.Indicator,
+                Measure = model.Measure
+            };
+            await _metricRepository.Add(metric);
+            var configureMetric = new ConfigurationMetric
+            {
+                MetricId = newMetricId,
+                PhaseId = model.PhaseId,
+                CategoryId = model.CategoryId
+            };
+            await _configurationMetricRepository.Add(configureMetric);
+            return View("GetPhase");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateIndicator(int phaseId)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int userId = int.Parse(userIdClaim.Value);
+            var userCoach = await _userCoachRepository.GetByUserId(userId);
+            var team = await _teamRepository.GetTeamByUserCoachId(userCoach.UserCoachId);
+            var teamUserAthletes = await _teamUserAthleteRepository.GetTeamUserAthletesByTeamId(team.TeamId);
+            var category = await _categoryRepository.GetById(team.CategoryId);
+            var athleteList = teamUserAthletes.Select(athlete => new AthleteDto
+            {
+                UserAthleteId = athlete.User_Athlete.UserAthleteId,
+                NameAthlete = athlete.User_Athlete.NameAthlete,
+            }).ToList();
+            var configurationMetrics = await _configurationMetricRepository.GetByPhaseAndCategory(phaseId, team.CategoryId);
+            var metricList = configurationMetrics.Select(cm => new MetricDto
+            {
+                MetricId = cm.Metric.MetricId,
+                MetricName = cm.Metric.MetricName,
+            }).ToList();
+            ViewData["AthleteList"] = athleteList;
+            ViewData["MetricList"] = metricList;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateIndicator(GoalIndicator model)
+        {
+            var lastIndicator = await _goalIndicatorRepository.GetSequence(new GoalIndicator());
+            int newIndicatorId = (lastIndicator != null) ? lastIndicator.MetricId + 1 : 1;
+            var indicator = new GoalIndicator
+            {
+                GoalIndicatorId = newIndicatorId,
+                UserAthleteId = model.UserAthleteId,
+                MetricId = model.MetricId,
+                MeasureAthlete = model.MeasureAthlete
+            };
+            await _goalIndicatorRepository.Add(indicator);
             return View();
         }
     }
