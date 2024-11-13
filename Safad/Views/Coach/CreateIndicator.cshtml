@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCoach.cshtml";
+}
+
+@using Safad.Dtos
+
+<partial name="_NavCoach" />
+
+<div class="container-phase">
+    <div class="container-physical">
+        <h2 class="text-center">Fase de Preparación Física</h2>
+        <table class="table table-bordered border-dark">
+            <thead>
+                <tr>
+                    <th>
+                        <form asp-action="CreateIndicator" method="post">
+                            <div class="form-group row mb-12">
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="UserAthleteId" name="UserAthleteId" asp-items="@(new SelectList((IEnumerable<AthleteDto>)ViewData["AthleteList"], "UserAthleteId", "NameAthlete"))" required>
+                                        <option value="">Seleccione un Deportista</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="MetricId" name="MetricId" asp-items="@(new SelectList((IEnumerable<MetricDto>)ViewData["MetricList"], "MetricId", "MetricName"))" required>
+                                        <option value="">Seleccione una Métrica</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="MeasureAthlete" name="MeasureAthlete" placeholder="Logro" required />
+                                </div>
+                                <div class="col-sm-2 offset-sm-3">
+                                    <button type="submit" id="createIndicator" class="btn btn-dark">Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <!--th colspan="6">
+                        <div class="table-responsive" style="max-height: 320px; overflow-y: auto;">
+                            <table class="table table-light table-hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nombre</th>
+                                        <th>DNI</th>
+                                        <th>Teléfono</th>
+                                        <th>Dirección</th>
+                                        <th>Edad</th>
+                                        <th>Email</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </!--th-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

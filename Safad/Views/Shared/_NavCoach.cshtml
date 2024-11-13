@@ -1,0 +1,26 @@
+﻿<div class="container-phases">
+    <nav class="navbar navbar-light bg-white fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Mis Entrenamientos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Coach" asp-action="CreateIndicator" asp-route-phaseId="1">Fase de Preparación Física</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Fase Técnica y Táctica</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Fase de Integración Táctica Colectiva</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Fase de Competencia</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Fase de Recuperación</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Fase de Transición</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Fase de Análisis de Rendimiento</a></li>
+                    </ul>
+                    <form class="d-flex mt-3" role="search" method="get" asp-action="CreateMetric" asp-controller="Coach">
+                        <button class="btn btn-outline-dark" type="submit">Crear Métricas</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

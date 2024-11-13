@@ -5,7 +5,6 @@ using Safad.Data;
 
 namespace Safad.Repositories
 {
-
     public class RepositoryProfesional : Repository<Profesional>, IProfesionalRepository
     {
         private readonly SafadDBContext _context;

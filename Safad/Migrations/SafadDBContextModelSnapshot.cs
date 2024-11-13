@@ -41,6 +41,26 @@ namespace Safad.Migrations
                     b.ToTable("Categories", (string)null);
                 });
 
+            modelBuilder.Entity("Safad.Models.ConfigurationMetric", b =>
+                {
+                    b.Property<int>("PhaseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MetricId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PhaseId", "MetricId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("MetricId");
+
+                    b.ToTable("ConfigurationMetrics", (string)null);
+                });
+
             modelBuilder.Entity("Safad.Models.Division", b =>
                 {
                     b.Property<int>("DivisionId")
@@ -64,6 +84,106 @@ namespace Safad.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Divisions", (string)null);
+                });
+
+            modelBuilder.Entity("Safad.Models.GoalIndicator", b =>
+                {
+                    b.Property<int>("GoalIndicatorId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("MeasureAthlete")
+                        .HasColumnType("real");
+
+                    b.Property<int>("MetricId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserAthleteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GoalIndicatorId");
+
+                    b.HasIndex("MetricId");
+
+                    b.HasIndex("UserAthleteId");
+
+                    b.ToTable("GoalIndicators", (string)null);
+                });
+
+            modelBuilder.Entity("Safad.Models.Metric", b =>
+                {
+                    b.Property<int>("MetricId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Indicator")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Measure")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("MetricName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("MetricId");
+
+                    b.ToTable("Metrics", (string)null);
+                });
+
+            modelBuilder.Entity("Safad.Models.Phase", b =>
+                {
+                    b.Property<int>("PhaseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhaseId"));
+
+                    b.Property<string>("PhaseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PhaseId");
+
+                    b.ToTable("Phases", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PhaseId = 1,
+                            PhaseName = "Fase de Preparación Física"
+                        },
+                        new
+                        {
+                            PhaseId = 2,
+                            PhaseName = "Fase Técnica y Táctica"
+                        },
+                        new
+                        {
+                            PhaseId = 3,
+                            PhaseName = "Fase de Integración Táctica Colectiva"
+                        },
+                        new
+                        {
+                            PhaseId = 4,
+                            PhaseName = "Fase de Competencia"
+                        },
+                        new
+                        {
+                            PhaseId = 5,
+                            PhaseName = "Fase de Recuperación"
+                        },
+                        new
+                        {
+                            PhaseId = 6,
+                            PhaseName = "Fase de Transición"
+                        },
+                        new
+                        {
+                            PhaseId = 7,
+                            PhaseName = "Fase de Análisis de Rendimiento"
+                        });
                 });
 
             modelBuilder.Entity("Safad.Models.Profesional", b =>
@@ -327,6 +447,33 @@ namespace Safad.Migrations
                     b.ToTable("UserAthletes", (string)null);
                 });
 
+            modelBuilder.Entity("Safad.Models.ConfigurationMetric", b =>
+                {
+                    b.HasOne("Safad.Models.Category", "Category")
+                        .WithMany("ConfigurationMetric")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Safad.Models.Metric", "Metric")
+                        .WithMany("ConfigurationMetric")
+                        .HasForeignKey("MetricId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Safad.Models.Phase", "Phase")
+                        .WithMany("ConfigurationMetric")
+                        .HasForeignKey("PhaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Metric");
+
+                    b.Navigation("Phase");
+                });
+
             modelBuilder.Entity("Safad.Models.Division", b =>
                 {
                     b.HasOne("Safad.Models.Category", "Category")
@@ -336,6 +483,25 @@ namespace Safad.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Safad.Models.GoalIndicator", b =>
+                {
+                    b.HasOne("Safad.Models.Metric", "Metric")
+                        .WithMany("GoalIndicator")
+                        .HasForeignKey("MetricId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Safad.Models.User_Athlete", "User_Athlete")
+                        .WithMany("GoalIndicator")
+                        .HasForeignKey("UserAthleteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Metric");
+
+                    b.Navigation("User_Athlete");
                 });
 
             modelBuilder.Entity("Safad.Models.Profesional", b =>
@@ -449,6 +615,8 @@ namespace Safad.Migrations
 
             modelBuilder.Entity("Safad.Models.Category", b =>
                 {
+                    b.Navigation("ConfigurationMetric");
+
                     b.Navigation("Division");
 
                     b.Navigation("Teams");
@@ -457,6 +625,18 @@ namespace Safad.Migrations
             modelBuilder.Entity("Safad.Models.Division", b =>
                 {
                     b.Navigation("Teams");
+                });
+
+            modelBuilder.Entity("Safad.Models.Metric", b =>
+                {
+                    b.Navigation("ConfigurationMetric");
+
+                    b.Navigation("GoalIndicator");
+                });
+
+            modelBuilder.Entity("Safad.Models.Phase", b =>
+                {
+                    b.Navigation("ConfigurationMetric");
                 });
 
             modelBuilder.Entity("Safad.Models.Profesional", b =>
@@ -486,6 +666,8 @@ namespace Safad.Migrations
 
             modelBuilder.Entity("Safad.Models.User_Athlete", b =>
                 {
+                    b.Navigation("GoalIndicator");
+
                     b.Navigation("TeamUserAthletes");
                 });
 #pragma warning restore 612, 618

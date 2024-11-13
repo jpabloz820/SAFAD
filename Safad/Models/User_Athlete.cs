@@ -15,5 +15,6 @@
         public int UserId { get; set; }
         public User User { get; set; }
         public ICollection<TeamUserAthlete> TeamUserAthletes { get; set; }
+        public ICollection<GoalIndicator> GoalIndicator { get; set; }
     }
 }

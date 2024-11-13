@@ -55,9 +55,55 @@
 .container-phases {
     width: 1157px;
     height: 510px;
-    padding: 20px;
-    background-color: rgba(248, 252, 184, 0.7);
     position: absolute;
     top: -20px;
     left: 8px 
+}
+
+.navbar {
+    position: absolute;
+}
+
+.offcanvas {
+    height: 83.5vh;
+}
+
+.container-phase {
+    width: 1157px;
+    height: 510px;
+    background-color: rgba(248, 252, 184, 0.7);
+    position: absolute;
+    top: -20px;
+    left: 8px
+}
+
+.container-metric {
+    padding: 20px;
+    border: solid 1px;
+    width: 700px;
+    height: 420px;
+    position: absolute;
+    top: 80px;
+    left: 250px
+}
+
+#createMetric {
+    position: absolute;
+    top: 370px;
+    left: 300px
+}
+
+.container-physical {
+    padding: 20px;
+    width: 1100px;
+    height: 500px;
+    position: absolute;
+    top: 50px;
+    left: 10px
+}
+
+#createIndicator {
+    position: absolute;
+    top: 75px;
+    left: 900px
 }
