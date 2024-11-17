@@ -271,6 +271,7 @@ namespace Safad.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateIndicator(int phaseId)
         {
+            ViewData["PhaseId"] = phaseId;
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             int userId = int.Parse(userIdClaim.Value);
             var userCoach = await _userCoachRepository.GetByUserId(userId);
@@ -294,10 +295,10 @@ namespace Safad.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateIndicator(GoalIndicator model)
+        public async Task<IActionResult> CreateIndicators(GoalIndicator model, int phaseId)
         {
             var lastIndicator = await _goalIndicatorRepository.GetSequence(new GoalIndicator());
-            int newIndicatorId = (lastIndicator != null) ? lastIndicator.MetricId + 1 : 1;
+            int newIndicatorId = (lastIndicator != null) ? lastIndicator.GoalIndicatorId + 1 : 1;
             var indicator = new GoalIndicator
             {
                 GoalIndicatorId = newIndicatorId,
@@ -306,7 +307,7 @@ namespace Safad.Controllers
                 MeasureAthlete = model.MeasureAthlete
             };
             await _goalIndicatorRepository.Add(indicator);
-            return View();
+            return RedirectToAction("CreateIndicator", new { phaseId });
         }
     }
 }
