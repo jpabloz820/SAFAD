@@ -39,28 +39,92 @@
             </thead>
             <tbody>
                 <tr>
-                    <!--th colspan="6">
-                        <div class="table-responsive" style="max-height: 320px; overflow-y: auto;">
-                            <table class="table table-light table-hover">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Nombre</th>
-                                        <th>DNI</th>
-                                        <th>Teléfono</th>
-                                        <th>Dirección</th>
-                                        <th>Edad</th>
-                                        <th>Email</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </!--th-->
+                    <td>
+                        <!-- Tabla de los indicadores -->
+                        <form method="get" asp-action="GetIndicators">
+                            <input type="hidden" name="PhaseId" value="@ViewData["PhaseId"]" />
+                            <div class="form-group">
+                                <select id="UserAthleteId" name="UserAthleteId" class="form-control" required>
+                                    <option value="">Seleccione un Deportista</option>
+                                    @foreach (var athlete in (IEnumerable<AthleteDto>)ViewData["AthleteList"])
+                                    {
+                                        <option value="@athlete.UserAthleteId">@athlete.NameAthlete</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="MetricId" name="MetricId" class="form-control" required>
+                                    <option value="">Seleccione una Métrica</option>
+                                    @foreach (var metric in (IEnumerable<MetricDto>)ViewData["MetricList"])
+                                    {
+                                        <option value="@metric.MetricId">@metric.MetricName</option>
+                                    }
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Filtrar</button>
+                        </form>
+
+                        <table class="table table-bordered mt-3">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Resultado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewData["Indicators"] != null)
+                                {
+                                    foreach (var indicator in (IEnumerable<GoalIndicatorDto>)ViewData["Indicators"])
+                                    {
+                                        <tr>
+                                            <td>@indicator.GoalIndicatorId</td>
+                                            <td>@indicator.MeasureAthlete</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <!-- Contenedor para la gráfica -->
+                        <canvas id="indicatorChart" width="400" height="400"></canvas>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('indicatorChart').getContext('2d');
+        const data = @Html.Raw(Json.Serialize(ViewData["Indicators"]));
+
+        if (data && data.length > 0) {
+            const labels = data.map(i => Indicador ${i.GoalIndicatorId});
+            const values = data.map(i => i.MeasureAthlete);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Resultados del Jugador',
+                        data: values,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>

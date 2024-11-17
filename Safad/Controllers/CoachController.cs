@@ -309,5 +309,23 @@ namespace Safad.Controllers
             await _goalIndicatorRepository.Add(indicator);
             return RedirectToAction("CreateIndicator", new { phaseId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetIndicators(int phaseId, int userAthleteId, int metricId, int limit = 10)
+        {
+            var indicators = await _goalIndicatorRepository.GetByPhaseUserMetric(phaseId, userAthleteId, metricId, limit);
+
+            // Transformar los datos para la tabla y el gráfico
+            var indicatorsDto = indicators.Select(indicator => new GoalIndicatorDto
+            {
+                GoalIndicatorId = indicator.GoalIndicatorId,
+                MeasureAthlete = indicator.MeasureAthlete
+            }).ToList();
+
+            ViewData["Indicators"] = indicatorsDto;
+
+            return RedirectToAction("CreateIndicator", new { phaseId }); 
+        }
     }
 }
+
