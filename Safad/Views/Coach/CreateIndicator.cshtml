@@ -13,7 +13,8 @@
             <thead>
                 <tr>
                     <th>
-                        <form asp-action="CreateIndicator" method="post">
+                        <form asp-action="CreateIndicators" method="post">
+                            <input type="hidden" name="PhaseId" value="@ViewData["PhaseId"]" />
                             <div class="form-group row mb-12">
                                 <div class="col-sm-4">
                                     <select class="form-control" id="UserAthleteId" name="UserAthleteId" asp-items="@(new SelectList((IEnumerable<AthleteDto>)ViewData["AthleteList"], "UserAthleteId", "NameAthlete"))" required>
