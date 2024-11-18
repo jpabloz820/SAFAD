@@ -40,54 +40,72 @@
             <tbody>
                 <tr>
                     <td>
-                        <!-- Tabla de los indicadores -->
-                        <form method="get" asp-action="GetIndicators">
-                            <input type="hidden" name="PhaseId" value="@ViewData["PhaseId"]" />
-                            <div class="form-group">
-                                <select id="UserAthleteId" name="UserAthleteId" class="form-control" required>
-                                    <option value="">Seleccione un Deportista</option>
-                                    @foreach (var athlete in (IEnumerable<AthleteDto>)ViewData["AthleteList"])
-                                    {
-                                        <option value="@athlete.UserAthleteId">@athlete.NameAthlete</option>
-                                    }
-                                </select>
+                        <div class="container-indicators">
+                            <div class="row mb-4">
+                                <form method="get" asp-action="GetIndicators">
+                                    <input type="hidden" name="PhaseId" value="@ViewData["PhaseId"]" />
+                                    <div class="form-group row mb-12">
+                                        <div class="col-sm-4">
+                                            <select id="UserAthleteId" name="UserAthleteId" class="form-control" required>
+                                                <option value="">Seleccione un Deportista</option>
+                                                @foreach (var athlete in (IEnumerable<AthleteDto>)ViewData["AthleteList"])
+                                                {
+                                                    <option value="@athlete.UserAthleteId">@athlete.NameAthlete</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <select id="MetricId" name="MetricId" class="form-control" required>
+                                                <option value="">Seleccione una Métrica</option>
+                                                @foreach (var metric in (IEnumerable<MetricDto>)ViewData["MetricList"])
+                                                {
+                                                    <option value="@metric.MetricId">@metric.MetricName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            
+                                        </div>
+                                        <div class="col-sm-2 offset-sm-3">
+                                            <button type="submit" id="getIndicator" class="btn btn-dark">Filtrar</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <select id="MetricId" name="MetricId" class="form-control" required>
-                                    <option value="">Seleccione una Métrica</option>
-                                    @foreach (var metric in (IEnumerable<MetricDto>)ViewData["MetricList"])
-                                    {
-                                        <option value="@metric.MetricId">@metric.MetricName</option>
-                                    }
-                                </select>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Medida del Atleta</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewData["Indicators"] != null && ((IEnumerable<GoalIndicatorDto>)ViewData["Indicators"]).Any())
+                                            {
+                                                foreach (var indicator in (IEnumerable<GoalIndicatorDto>)ViewData["Indicators"])
+                                                {
+                                                    <tr>
+                                                        <td>@indicator.GoalIndicatorId</td>
+                                                        <td>@indicator.MeasureAthlete</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="2" class="text-center">No se encontraron indicadores.</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <canvas id="indicatorChart" width="400" height="200"></canvas>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Filtrar</button>
-                        </form>
-
-                        <table class="table table-bordered mt-3">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Resultado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (ViewData["Indicators"] != null)
-                                {
-                                    foreach (var indicator in (IEnumerable<GoalIndicatorDto>)ViewData["Indicators"])
-                                    {
-                                        <tr>
-                                            <td>@indicator.GoalIndicatorId</td>
-                                            <td>@indicator.MeasureAthlete</td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </td>
-                    <td>
-                        <!-- Contenedor para la gráfica -->
-                        <canvas id="indicatorChart" width="400" height="400"></canvas>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -95,36 +113,44 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const ctx = document.getElementById('indicatorChart').getContext('2d');
-        const data = @Html.Raw(Json.Serialize(ViewData["Indicators"]));
-
-        if (data && data.length > 0) {
-            const labels = data.map(i => Indicador ${i.GoalIndicatorId});
-            const values = data.map(i => i.MeasureAthlete);
-
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Resultados del Jugador',
-                        data: values,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
+    document.addEventListener("DOMContentLoaded", function () {
+        var indicators = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewData["Indicators"] ?? new List<GoalIndicatorDto>()));
+        console.log(indicators);
+        var labels = indicators.map(indicator => `ID ${indicator.GoalIndicatorId}`);
+        console.log(labels);
+        var data = indicators.map(indicator => indicator.MeasureAthlete);
+        console.log(data);
+        var ctx = document.getElementById('indicatorChart').getContext('2d');
+        console.log(ctx);
+        var indicatorChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Medidas del Atleta',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
                 },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
-            });
-        }
+            }
+        });
+        console.log(indicatorChart);
     });
 </script>
+
