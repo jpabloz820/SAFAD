@@ -107,3 +107,10 @@
     top: 75px;
     left: 900px
 }
+
+#getIndicator {
+    width: 82px;
+    position: absolute;
+    top: 130px;
+    left: 900px
+}

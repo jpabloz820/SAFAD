@@ -311,20 +311,36 @@ namespace Safad.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetIndicators(int phaseId, int userAthleteId, int metricId, int limit = 10)
+        public async Task<IActionResult> GetIndicators(int phaseId, int userAthleteId, int metricId, int limit = 4)
         {
             var indicators = await _goalIndicatorRepository.GetByPhaseUserMetric(phaseId, userAthleteId, metricId, limit);
-
-            // Transformar los datos para la tabla y el gráfico
             var indicatorsDto = indicators.Select(indicator => new GoalIndicatorDto
             {
                 GoalIndicatorId = indicator.GoalIndicatorId,
                 MeasureAthlete = indicator.MeasureAthlete
             }).ToList();
-
             ViewData["Indicators"] = indicatorsDto;
-
-            return RedirectToAction("CreateIndicator", new { phaseId }); 
+            ViewData["PhaseId"] = phaseId;
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int userId = int.Parse(userIdClaim.Value);
+            var userCoach = await _userCoachRepository.GetByUserId(userId);
+            var team = await _teamRepository.GetTeamByUserCoachId(userCoach.UserCoachId);
+            var teamUserAthletes = await _teamUserAthleteRepository.GetTeamUserAthletesByTeamId(team.TeamId);
+            var category = await _categoryRepository.GetById(team.CategoryId);
+            var athleteList = teamUserAthletes.Select(athlete => new AthleteDto
+            {
+                UserAthleteId = athlete.User_Athlete.UserAthleteId,
+                NameAthlete = athlete.User_Athlete.NameAthlete,
+            }).ToList();
+            var configurationMetrics = await _configurationMetricRepository.GetByPhaseAndCategory(phaseId, team.CategoryId);
+            var metricList = configurationMetrics.Select(cm => new MetricDto
+            {
+                MetricId = cm.Metric.MetricId,
+                MetricName = cm.Metric.MetricName,
+            }).ToList();
+            ViewData["AthleteList"] = athleteList;
+            ViewData["MetricList"] = metricList;
+            return View("CreateIndicator");
         }
     }
 }

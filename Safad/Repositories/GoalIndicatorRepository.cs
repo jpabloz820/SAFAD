@@ -13,6 +13,7 @@ namespace Safad.Repositories
         {
             _context = context;
         }
+
         /// <summary>
         /// Método genérico para obtener los indicadores según la fase, el deportista y la metrica
         /// </summary>
