@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_LayoutCreate.cshtml";
 }
 
-@model Safad.Models.Profesional
+@model Profesional
 
 @{
     ViewData["Title"] = "Crear Profesional";
@@ -25,6 +25,18 @@
             <label for="Cellphone">Celular</label>
             <input type="text" class="form-control" id="Cellphone" name="Cellphone" required />
         </div>
+        <div class="form-group row mb-3">
+            <label for="TypeProfessionalId" class="col-sm-3 col-form-label text-end">Tipo de Profesional</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="TypeProfessionalId" name="TypeProfessionalId" asp-items="@(new SelectList((IEnumerable<TypeProfessional>)ViewData["Type"], "TypeProfessionalId", "NameType"))" required>
+                    <option value="">Seleccione un Tipo</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Photo">Foto</label>
+            <input type="file" class="form-control" id="Photo" name="photo" />
+        </div>
         <div class="form-group">
             <label for="Address">Dirección</label>
             <input type="text" class="form-control" id="Address" name="Address" required />
@@ -32,5 +44,6 @@
         <button type="submit" class="btn btn-primary">Crear</button>
     </form>
 </div>
+
 
 

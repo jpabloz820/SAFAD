@@ -12,6 +12,7 @@ namespace Safad.Data
         public DbSet<UserCoach> UserCoaches { get; set; }
         public DbSet<User_Athlete> UserAthletes { get; set; }
         public DbSet<Profesional> Profesional { get; set; }
+        public DbSet<TypeProfessional> TypeProfessional { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<TeamProfessional> TeamProfessionals { get; set; }
@@ -85,10 +86,24 @@ namespace Safad.Data
                 tb.Property(col => col.DniProfesional).IsRequired().HasMaxLength(20);
                 tb.Property(col => col.Cellphone).HasMaxLength(15);
                 tb.Property(col => col.Address).HasMaxLength(150);
+                tb.Property(col => col.PhotoPath).IsRequired().HasMaxLength(255);
                 tb.HasOne(uc => uc.User)
                     .WithMany()
                     .HasForeignKey(uc => uc.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
+                tb.HasOne(p => p.TypeProfessional)
+                  .WithMany(tp => tp.Profesionals)
+                  .HasForeignKey(p => p.TypeProfessionalId);
+            });
+            modelBuilder.Entity<TypeProfessional>(tb =>
+            {
+                tb.HasKey(tp => tp.TypeId);
+                tb.Property(col => col.TypeId).IsRequired().ValueGeneratedNever();
+                tb.Property(tp => tp.NameType).IsRequired().HasMaxLength(100);
+                tb.HasMany(tp => tp.Profesionals)
+                      .WithOne(p => p.TypeProfessional)
+                      .HasForeignKey(p => p.TypeProfessionalId)
+                      .OnDelete(DeleteBehavior.Restrict); 
             });
             modelBuilder.Entity<Category>(tb =>
             {
